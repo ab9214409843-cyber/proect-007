@@ -39,14 +39,13 @@
 `готово ✅` (кроме заливки на GitHub).
 
 ## Заметки
-- **Подтверждение email** в Supabase оставлено включённым (решение Андрея). Поток:
-  регистрация → письмо от Supabase → переход по ссылке (почта подтверждается) → вход по email/паролю.
-  Если войти до подтверждения — приложение покажет понятное сообщение «подтверди почту».
-- Добавлен обработчик `app/src/app/auth/confirm/route.ts` — принимает ссылку подтверждения и сразу
-  открывает сессию. **(Опционально, для опыта «клик по ссылке = сразу в кабинете»):** в Supabase →
-  Authentication → Email Templates → «Confirm signup» заменить ссылку на
-  `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email`, а в URL Configuration задать
-  Site URL (`http://localhost:3000` для разработки; адрес Vercel — после деплоя). Без этой настройки
-  поток тоже работает (через стандартное письмо), просто после подтверждения нужно нажать «Войти».
+- **Подтверждение email** в Supabase сейчас **отключено** (на время разработки, для удобства):
+  регистрация сразу пускает в кабинет, без письма. Проверено: регистрация → `/dashboard`.
+  **Перед публичным запуском включить обратно** (Supabase → Authentication → Sign In / Providers → Email).
+- На случай включённого подтверждения уже готов обработчик `app/src/app/auth/confirm/route.ts`
+  (принимает ссылку из письма и открывает сессию) и понятное сообщение при входе с неподтверждённой
+  почтой. Тогда же в Supabase → Email Templates → «Confirm signup» ссылку заменить на
+  `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email` и задать Site URL в URL Configuration.
 - Next.js 16: middleware переименован в `proxy` — защита маршрутов лежит в `app/src/proxy.ts`.
 - Vercel при деплое: **Root Directory = `app`**; переменные из `app/.env.example` добавить в настройках Vercel.
+- Код залит на GitHub: `https://github.com/ab9214409843-cyber/proect-007` (ветка `main`).
