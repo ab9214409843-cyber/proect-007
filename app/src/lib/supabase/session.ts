@@ -34,7 +34,17 @@ export async function updateSession(request: NextRequest) {
 
   const path = request.nextUrl.pathname;
   const isAuthPage = path === "/login" || path === "/register";
-  const isProtected = path.startsWith("/dashboard");
+  // Все разделы личного кабинета требуют входа.
+  const protectedPrefixes = [
+    "/dashboard",
+    "/events",
+    "/tasks",
+    "/documents",
+    "/experience",
+  ];
+  const isProtected = protectedPrefixes.some(
+    (p) => path === p || path.startsWith(p + "/"),
+  );
 
   // Неавторизованного на приватную страницу — на вход.
   if (!user && isProtected) {
