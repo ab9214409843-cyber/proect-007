@@ -17,9 +17,10 @@
 
 - ✅ Node.js — установлен (v24.16.0), npm 11.13.0
 - ✅ Git — установлен (2.54.0); репозиторий в проекте заведён (ветка `main`, есть коммиты)
-- ✅ GitHub — есть аккаунт (репозиторий ещё не создан; `gh` CLI пока не установлен)
+- ✅ GitHub — репозиторий `https://github.com/ab9214409843-cyber/proect-007` (ветка `main`, remote `origin`)
 - ✅ Supabase — проект `proect-007` (Central EU / Frankfurt), подключён в приложении через `@supabase/ssr`
-- ✅ Vercel — аккаунт есть (через GitHub); деплой подключим после заливки кода на GitHub
+- ✅ Vercel — подключён к GitHub, сайт развёрнут: **https://proect-007.vercel.app**
+  (Root Directory = `app`, переменные Supabase заданы, автодеплой при push в `main`)
 - ✅ MCP-расширения — supabase + playwright активны, проверены в работе
 
 ## Версии и важные детали (на Этапе 1)

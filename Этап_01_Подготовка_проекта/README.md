@@ -47,5 +47,8 @@
   почтой. Тогда же в Supabase → Email Templates → «Confirm signup» ссылку заменить на
   `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email` и задать Site URL в URL Configuration.
 - Next.js 16: middleware переименован в `proxy` — защита маршрутов лежит в `app/src/proxy.ts`.
-- Vercel при деплое: **Root Directory = `app`**; переменные из `app/.env.example` добавить в настройках Vercel.
-- Код залит на GitHub: `https://github.com/ab9214409843-cyber/proect-007` (ветка `main`).
+- Код на GitHub: `https://github.com/ab9214409843-cyber/proect-007` (ветка `main`).
+- **Сайт развёрнут на Vercel: https://proect-007.vercel.app** (Root Directory = `app`, переменные Supabase
+  заданы, автодеплой при каждом push в `main`). Проверено на проде: регистрация → кабинет, защита маршрутов.
+- На будущее: когда снова включим подтверждение email — в Supabase → Authentication → URL Configuration
+  задать **Site URL = https://proect-007.vercel.app** и добавить его в Redirect URLs.
