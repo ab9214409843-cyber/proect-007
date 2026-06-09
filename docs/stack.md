@@ -15,12 +15,21 @@
 
 ## Статус окружения (обновлено 2026-06-09)
 
-- ✅ Node.js — установлен (v24.16.0 LTS), npm 11.13.0
-- ✅ Git — установлен (2.54.0)
-- ✅ GitHub — есть аккаунт
-- ✅ Supabase — аккаунт есть; проект `proect-007` создан (Central EU / Frankfurt)
-- ✅ Vercel — аккаунт есть (через GitHub)
-- ✅ MCP-расширения — настроены (supabase + playwright), активны после перезапуска Claude Code
+- ✅ Node.js — установлен (v24.16.0), npm 11.13.0
+- ✅ Git — установлен (2.54.0); репозиторий в проекте заведён (ветка `main`, есть коммиты)
+- ✅ GitHub — есть аккаунт (репозиторий ещё не создан; `gh` CLI пока не установлен)
+- ✅ Supabase — проект `proect-007` (Central EU / Frankfurt), подключён в приложении через `@supabase/ssr`
+- ✅ Vercel — аккаунт есть (через GitHub); деплой подключим после заливки кода на GitHub
+- ✅ MCP-расширения — supabase + playwright активны, проверены в работе
+
+## Версии и важные детали (на Этапе 1)
+
+- **Next.js 16.2.7** (App Router, каталог `src/`, Turbopack по умолчанию), React 19.2, Tailwind CSS v4, TypeScript 5.
+- ⚠️ **Next.js 16 ≠ 15.** Ключевые отличия: middleware → **`proxy.ts`** (функция `proxy`, runtime Node.js);
+  `cookies()`, `params`, `searchParams` — **асинхронные**; `next lint` убран (ESLint напрямую).
+  Гайд по миграции и доки лежат в `app/node_modules/next/dist/docs/`.
+- **Деплой на Vercel:** приложение вложено в подпапку → при подключении указать **Root Directory = `app`**.
+- **Секреты:** `app/.env.local` (URL + publishable-ключ Supabase) под `.gitignore`, в git не коммитятся.
 
 ## Чек-лист подготовки окружения (перед написанием кода)
 
