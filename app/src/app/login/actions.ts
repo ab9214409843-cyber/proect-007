@@ -12,9 +12,13 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    redirect(
-      `/login?error=${encodeURIComponent("Не удалось войти. Проверь email и пароль.")}`,
-    );
+    const notConfirmed =
+      error.code === "email_not_confirmed" ||
+      /not confirmed/i.test(error.message);
+    const message = notConfirmed
+      ? "Почта ещё не подтверждена. Открой письмо от Supabase, перейди по ссылке — и войди снова."
+      : "Не удалось войти. Проверь email и пароль.";
+    redirect(`/login?error=${encodeURIComponent(message)}`);
   }
 
   revalidatePath("/", "layout");
