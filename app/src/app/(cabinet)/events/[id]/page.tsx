@@ -19,6 +19,12 @@ import {
   documentTypeLabel,
   formatFileSize,
 } from "@/lib/documents";
+import {
+  categoryBadgeClass,
+  categoryLabel,
+  kindBadgeClass,
+  kindLabel,
+} from "@/lib/experience";
 import { updateEventStatus } from "../actions";
 import { downloadDocument } from "../../documents/actions";
 import DeleteEventButton from "./DeleteEventButton";
@@ -50,6 +56,13 @@ export default async function EventPage({
   // Документы этого мероприятия — свежие сверху.
   const { data: documents } = await supabase
     .from("documents")
+    .select("*")
+    .eq("event_id", id)
+    .order("created_at", { ascending: false });
+
+  // Заметки опыта этого мероприятия — свежие сверху.
+  const { data: notes } = await supabase
+    .from("experience_notes")
     .select("*")
     .eq("event_id", id)
     .order("created_at", { ascending: false });
@@ -253,11 +266,61 @@ export default async function EventPage({
         )}
       </section>
 
-      {/* Заметки опыта — появятся на этапе 8 */}
-      <div className="mt-8 rounded-lg border border-dashed border-gray-300 bg-white p-6 text-center">
-        <h2 className="font-semibold text-gray-900">Заметки опыта</h2>
-        <p className="mt-1 text-sm text-gray-500">появятся на этапе 8</p>
-      </div>
+      {/* Заметки опыта мероприятия (этап 8) */}
+      <section className="mt-10">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-gray-900">Заметки опыта</h2>
+          <Link
+            href={`/experience/new?event=${event.id}`}
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+          >
+            + Добавить заметку
+          </Link>
+        </div>
+        {notes && notes.length > 0 ? (
+          <ul className="mt-4 flex flex-col gap-2">
+            {notes.map((note) => (
+              <li
+                key={note.id}
+                className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
+              >
+                <Link href={`/experience/${note.id}`} className="min-w-0 flex-1">
+                  <p className="truncate font-medium text-gray-900 hover:underline">
+                    {note.title}
+                  </p>
+                </Link>
+                <div className="flex shrink-0 items-center gap-2">
+                  <span
+                    className={
+                      "rounded-full px-2.5 py-1 text-xs font-medium " +
+                      kindBadgeClass(note.kind)
+                    }
+                  >
+                    {kindLabel(note.kind)}
+                  </span>
+                  {note.category && (
+                    <span
+                      className={
+                        "rounded-full px-2.5 py-1 text-xs font-medium " +
+                        categoryBadgeClass(note.category)
+                      }
+                    >
+                      {categoryLabel(note.category)}
+                    </span>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="mt-4 rounded-lg border border-dashed border-gray-300 bg-white p-8 text-center">
+            <p className="text-gray-700">Пока нет заметок.</p>
+            <p className="mt-1 text-sm text-gray-500">
+              После мероприятия запиши выводы — нажми «+ Добавить заметку».
+            </p>
+          </div>
+        )}
+      </section>
     </div>
   );
 }

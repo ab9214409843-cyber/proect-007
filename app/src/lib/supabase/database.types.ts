@@ -135,6 +135,7 @@ export type Database = {
           description: string | null
           event_id: string | null
           id: string
+          kind: string | null
           title: string
           user_id: string
         }
@@ -144,6 +145,7 @@ export type Database = {
           description?: string | null
           event_id?: string | null
           id?: string
+          kind?: string | null
           title: string
           user_id: string
         }
@@ -153,6 +155,7 @@ export type Database = {
           description?: string | null
           event_id?: string | null
           id?: string
+          kind?: string | null
           title?: string
           user_id?: string
         }
