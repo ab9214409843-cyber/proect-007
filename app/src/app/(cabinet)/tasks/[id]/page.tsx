@@ -1,0 +1,134 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { formatEventDate } from "@/lib/events";
+import {
+  TASK_STATUSES,
+  taskPriorityBadgeClass,
+  taskPriorityLabel,
+  taskStatusBadgeClass,
+  taskStatusLabel,
+} from "@/lib/tasks";
+import { updateTaskStatus } from "../actions";
+import DeleteTaskButton from "./DeleteTaskButton";
+
+// Карточка задачи. В Next.js 16 params — асинхронные.
+export default async function TaskPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  const supabase = await createClient();
+  const { data: task } = await supabase
+    .from("tasks")
+    .select("*, events(id, title)")
+    .eq("id", id)
+    .single();
+
+  if (!task) notFound();
+
+  return (
+    <div className="mx-auto max-w-4xl">
+      <Link
+        href="/tasks"
+        className="text-sm font-medium text-gray-500 transition hover:text-gray-900"
+      >
+        ← К задачам
+      </Link>
+
+      <div className="mt-3 flex flex-wrap items-center gap-3">
+        <h1 className="text-2xl font-semibold text-gray-900">{task.title}</h1>
+        <span
+          className={
+            "rounded-full px-3 py-1 text-xs font-medium " +
+            taskPriorityBadgeClass(task.priority)
+          }
+        >
+          {taskPriorityLabel(task.priority)}
+        </span>
+        <span
+          className={
+            "rounded-full px-3 py-1 text-xs font-medium " +
+            taskStatusBadgeClass(task.status)
+          }
+        >
+          {taskStatusLabel(task.status)}
+        </span>
+      </div>
+
+      {/* Основные поля */}
+      <dl className="mt-8 grid gap-4 sm:grid-cols-2">
+        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-gray-500">Срок</dt>
+          <dd className="mt-1 text-gray-900">{formatEventDate(task.due_date)}</dd>
+        </div>
+        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-gray-500">
+            Мероприятие
+          </dt>
+          <dd className="mt-1 text-gray-900">
+            {task.events ? (
+              <Link
+                href={`/events/${task.events.id}`}
+                className="text-gray-900 underline-offset-2 hover:underline"
+              >
+                {task.events.title}
+              </Link>
+            ) : (
+              "—"
+            )}
+          </dd>
+        </div>
+        {task.description && (
+          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:col-span-2">
+            <dt className="text-xs uppercase tracking-wide text-gray-500">
+              Описание
+            </dt>
+            <dd className="mt-1 whitespace-pre-line text-gray-900">
+              {task.description}
+            </dd>
+          </div>
+        )}
+      </dl>
+
+      {/* Смена статуса + действия */}
+      <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
+        <form action={updateTaskStatus} className="flex items-end gap-2">
+          <input type="hidden" name="id" value={task.id} />
+          <label className="flex flex-col gap-1 text-sm text-gray-700">
+            Статус
+            <select
+              name="status"
+              defaultValue={task.status}
+              className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+            >
+              {TASK_STATUSES.map((s) => (
+                <option key={s.code} value={s.code}>
+                  {s.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="submit"
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+          >
+            Обновить
+          </button>
+        </form>
+
+        <div className="flex items-center gap-3">
+          <Link
+            href={`/tasks/${task.id}/edit`}
+            className="rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+          >
+            Редактировать
+          </Link>
+          <DeleteTaskButton id={task.id} />
+        </div>
+      </div>
+    </div>
+  );
+}
