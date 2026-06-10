@@ -1,4 +1,4 @@
-// Сгенерировано автоматически из схемы Supabase (Этап 3, обновлено на Этапе 5).
+// Сгенерировано автоматически из схемы Supabase (Этап 3, обновлено на Этапе 7).
 // Не редактировать вручную. Перегенерировать: Supabase MCP generate_typescript_types
 // (или `supabase gen types typescript`) после изменения схемы базы.
 
@@ -49,6 +49,8 @@ export type Database = {
         Row: {
           created_at: string
           event_id: string | null
+          file_name: string | null
+          file_size: number | null
           file_url: string | null
           id: string
           title: string
@@ -58,6 +60,8 @@ export type Database = {
         Insert: {
           created_at?: string
           event_id?: string | null
+          file_name?: string | null
+          file_size?: number | null
           file_url?: string | null
           id?: string
           title: string
@@ -67,6 +71,8 @@ export type Database = {
         Update: {
           created_at?: string
           event_id?: string | null
+          file_name?: string | null
+          file_size?: number | null
           file_url?: string | null
           id?: string
           title?: string

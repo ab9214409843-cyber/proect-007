@@ -14,7 +14,13 @@ import {
   taskStatusBadgeClass,
   taskStatusLabel,
 } from "@/lib/tasks";
+import {
+  documentTypeBadgeClass,
+  documentTypeLabel,
+  formatFileSize,
+} from "@/lib/documents";
 import { updateEventStatus } from "../actions";
+import { downloadDocument } from "../../documents/actions";
 import DeleteEventButton from "./DeleteEventButton";
 
 // Карточка мероприятия. В Next.js 16 params — асинхронные.
@@ -40,6 +46,13 @@ export default async function EventPage({
     .select("*")
     .eq("event_id", id)
     .order("due_date", { ascending: true, nullsFirst: false });
+
+  // Документы этого мероприятия — свежие сверху.
+  const { data: documents } = await supabase
+    .from("documents")
+    .select("*")
+    .eq("event_id", id)
+    .order("created_at", { ascending: false });
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -182,20 +195,68 @@ export default async function EventPage({
         )}
       </section>
 
-      {/* Связанные модули — появятся на следующих этапах */}
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        {[
-          { title: "Документы", note: "появятся на этапе 7" },
-          { title: "Заметки опыта", note: "появятся на этапе 8" },
-        ].map((block) => (
-          <div
-            key={block.title}
-            className="rounded-lg border border-dashed border-gray-300 bg-white p-6 text-center"
+      {/* Документы мероприятия (этап 7) */}
+      <section className="mt-10">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-gray-900">Документы</h2>
+          <Link
+            href={`/documents/new?event=${event.id}`}
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
           >
-            <h2 className="font-semibold text-gray-900">{block.title}</h2>
-            <p className="mt-1 text-sm text-gray-500">{block.note}</p>
+            + Добавить документ
+          </Link>
+        </div>
+        {documents && documents.length > 0 ? (
+          <ul className="mt-4 flex flex-col gap-2">
+            {documents.map((doc) => (
+              <li
+                key={doc.id}
+                className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
+              >
+                <Link href={`/documents/${doc.id}`} className="min-w-0 flex-1">
+                  <p className="truncate font-medium text-gray-900 hover:underline">
+                    {doc.title}
+                  </p>
+                  <p className="mt-1 text-sm text-gray-500">
+                    {formatFileSize(doc.file_size)}
+                  </p>
+                </Link>
+                <div className="flex shrink-0 items-center gap-2">
+                  <span
+                    className={
+                      "rounded-full px-2.5 py-1 text-xs font-medium " +
+                      documentTypeBadgeClass(doc.type)
+                    }
+                  >
+                    {documentTypeLabel(doc.type)}
+                  </span>
+                  <form action={downloadDocument}>
+                    <input type="hidden" name="id" value={doc.id} />
+                    <button
+                      type="submit"
+                      className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+                    >
+                      Скачать
+                    </button>
+                  </form>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="mt-4 rounded-lg border border-dashed border-gray-300 bg-white p-8 text-center">
+            <p className="text-gray-700">Пока нет документов.</p>
+            <p className="mt-1 text-sm text-gray-500">
+              Нажми «+ Добавить документ», чтобы загрузить первый файл.
+            </p>
           </div>
-        ))}
+        )}
+      </section>
+
+      {/* Заметки опыта — появятся на этапе 8 */}
+      <div className="mt-8 rounded-lg border border-dashed border-gray-300 bg-white p-6 text-center">
+        <h2 className="font-semibold text-gray-900">Заметки опыта</h2>
+        <p className="mt-1 text-sm text-gray-500">появятся на этапе 8</p>
       </div>
     </div>
   );
