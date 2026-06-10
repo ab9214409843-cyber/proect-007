@@ -3,10 +3,17 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import {
   EVENT_STATUSES,
+  formatEventDate,
   formatEventRange,
   statusBadgeClass,
   statusLabel,
 } from "@/lib/events";
+import {
+  taskPriorityBadgeClass,
+  taskPriorityLabel,
+  taskStatusBadgeClass,
+  taskStatusLabel,
+} from "@/lib/tasks";
 import { updateEventStatus } from "../actions";
 import DeleteEventButton from "./DeleteEventButton";
 
@@ -26,6 +33,13 @@ export default async function EventPage({
     .single();
 
   if (!event) notFound();
+
+  // Задачи автоплана этого мероприятия — по сроку (ближайшие сверху).
+  const { data: tasks } = await supabase
+    .from("tasks")
+    .select("*")
+    .eq("event_id", id)
+    .order("due_date", { ascending: true, nullsFirst: false });
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -111,12 +125,58 @@ export default async function EventPage({
         </div>
       </div>
 
+      {/* Задачи — автоплан по типу и дате мероприятия (этап 5) */}
+      <section className="mt-10">
+        <h2 className="text-lg font-semibold text-gray-900">План задач</h2>
+        {tasks && tasks.length > 0 ? (
+          <ul className="mt-4 flex flex-col gap-2">
+            {tasks.map((task) => (
+              <li
+                key={task.id}
+                className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
+              >
+                <div className="min-w-0">
+                  <p className="font-medium text-gray-900">{task.title}</p>
+                  <p className="mt-1 text-sm text-gray-500">
+                    Срок: {formatEventDate(task.due_date)}
+                  </p>
+                </div>
+                <div className="flex shrink-0 items-center gap-2">
+                  <span
+                    className={
+                      "rounded-full px-2.5 py-1 text-xs font-medium " +
+                      taskPriorityBadgeClass(task.priority)
+                    }
+                  >
+                    {taskPriorityLabel(task.priority)}
+                  </span>
+                  <span
+                    className={
+                      "rounded-full px-2.5 py-1 text-xs font-medium " +
+                      taskStatusBadgeClass(task.status)
+                    }
+                  >
+                    {taskStatusLabel(task.status)}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="mt-4 rounded-lg border border-dashed border-gray-300 bg-white p-8 text-center">
+            <p className="text-gray-700">Пока нет задач.</p>
+            <p className="mt-1 text-sm text-gray-500">
+              План задач создаётся автоматически при создании мероприятия с типом и датой.
+            </p>
+          </div>
+        )}
+      </section>
+
       {/* Связанные модули — появятся на следующих этапах */}
-      <div className="mt-8 grid gap-4 sm:grid-cols-3">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2">
         {[
-          { title: "Задачи", note: "появятся на этапе 5" },
-          { title: "Документы", note: "появятся на этапе 6" },
-          { title: "Заметки опыта", note: "появятся на этапе 7" },
+          { title: "Документы", note: "появятся на этапе 7" },
+          { title: "Заметки опыта", note: "появятся на этапе 8" },
         ].map((block) => (
           <div
             key={block.title}

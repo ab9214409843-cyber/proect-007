@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { EventRow } from "@/lib/events";
+import { EVENT_TYPES, type EventRow } from "@/lib/events";
 
 // Общая форма создания/редактирования мероприятия.
 // action — server action (createEvent или updateEvent); event — для предзаполнения при редактировании.
@@ -30,12 +30,32 @@ export default function EventForm({
         />
       </label>
 
+      <label className="flex flex-col gap-1 text-sm text-gray-700">
+        Тип мероприятия <span className="text-red-500">*</span>
+        <select
+          name="event_type"
+          required
+          defaultValue={event?.event_type ?? ""}
+          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+        >
+          <option value="" disabled>
+            — выбери тип —
+          </option>
+          {EVENT_TYPES.map((t) => (
+            <option key={t.code} value={t.code}>
+              {t.label}
+            </option>
+          ))}
+        </select>
+      </label>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="flex flex-col gap-1 text-sm text-gray-700">
-          Дата начала
+          Дата начала <span className="text-red-500">*</span>
           <input
             name="start_date"
             type="date"
+            required
             defaultValue={event?.start_date ?? ""}
             className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
           />

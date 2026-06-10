@@ -1,4 +1,4 @@
-// Сгенерировано автоматически из схемы Supabase (Этап 3).
+// Сгенерировано автоматически из схемы Supabase (Этап 3, обновлено на Этапе 5).
 // Не редактировать вручную. Перегенерировать: Supabase MCP generate_typescript_types
 // (или `supabase gen types typescript`) после изменения схемы базы.
 
@@ -24,6 +24,7 @@ export type Database = {
           event_type: string
           id: string
           offset_days: number
+          priority: string
           title: string
         }
         Insert: {
@@ -31,6 +32,7 @@ export type Database = {
           event_type: string
           id?: string
           offset_days: number
+          priority?: string
           title: string
         }
         Update: {
@@ -38,6 +40,7 @@ export type Database = {
           event_type?: string
           id?: string
           offset_days?: number
+          priority?: string
           title?: string
         }
         Relationships: []

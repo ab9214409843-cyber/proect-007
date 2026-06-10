@@ -20,6 +20,21 @@ export function statusLabel(code: string): string {
   return EVENT_STATUSES.find((s) => s.code === code)?.label ?? code;
 }
 
+// Типы мероприятий: код в БД (events.event_type / checklist_templates.event_type) → подпись в UI.
+// Пока один тип (каркас, Этап 5); другие типы добавляются сюда — под них наполняется
+// checklist_templates, и по типу строится автоплан задач.
+export const EVENT_TYPES = [
+  { code: "educational", label: "Познавательное мероприятие" },
+] as const;
+
+export type EventType = (typeof EVENT_TYPES)[number]["code"];
+
+// Подпись типа по коду (пусто или незнакомый код → «—»).
+export function eventTypeLabel(code: string | null): string {
+  if (!code) return "—";
+  return EVENT_TYPES.find((t) => t.code === code)?.label ?? code;
+}
+
 // Tailwind-классы цветного бейджа статуса.
 const STATUS_BADGE: Record<string, string> = {
   planned: "bg-gray-100 text-gray-700",
