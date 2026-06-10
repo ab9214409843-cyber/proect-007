@@ -34,13 +34,15 @@ export default function Modal({
       role="presentation"
     >
       <div
-        className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-lg"
+        className="w-full max-w-md rounded-2xl border border-sand bg-card p-6 shadow-xl shadow-espresso/10"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
       >
         {title && (
-          <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+          <h2 className="font-serif text-xl font-semibold text-espresso">
+            {title}
+          </h2>
         )}
         {children}
       </div>

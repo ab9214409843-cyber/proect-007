@@ -34,7 +34,7 @@ export default function ExperienceForm({
     <form action={action} className="mt-8 flex max-w-2xl flex-col gap-5">
       {note && <input type="hidden" name="id" value={note.id} />}
 
-      <label className="flex flex-col gap-1 text-sm text-gray-700">
+      <label className="flex flex-col gap-1 text-sm text-espresso">
         Заголовок <span className="text-red-500">*</span>
         <input
           name="title"
@@ -48,7 +48,7 @@ export default function ExperienceForm({
       </label>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <label className="flex flex-col gap-1 text-sm text-gray-700">
+        <label className="flex flex-col gap-1 text-sm text-espresso">
           Тип вывода
           <select
             name="kind"
@@ -62,7 +62,7 @@ export default function ExperienceForm({
             ))}
           </select>
         </label>
-        <label className="flex flex-col gap-1 text-sm text-gray-700">
+        <label className="flex flex-col gap-1 text-sm text-espresso">
           Категория
           <select
             name="category"
@@ -78,7 +78,7 @@ export default function ExperienceForm({
         </label>
       </div>
 
-      <label className="flex flex-col gap-1 text-sm text-gray-700">
+      <label className="flex flex-col gap-1 text-sm text-espresso">
         Мероприятие
         <select
           name="event_id"
@@ -94,7 +94,7 @@ export default function ExperienceForm({
         </select>
       </label>
 
-      <label className="flex flex-col gap-1 text-sm text-gray-700">
+      <label className="flex flex-col gap-1 text-sm text-espresso">
         Текст вывода
         <textarea
           name="description"

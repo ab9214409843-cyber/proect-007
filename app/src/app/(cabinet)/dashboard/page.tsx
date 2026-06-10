@@ -34,9 +34,9 @@ export default async function DashboardPage() {
   return (
     <div className="mx-auto max-w-4xl">
       <PageHeader title="Обзор" />
-      <p className="mt-2 text-gray-600">
+      <p className="mt-2 text-muted">
         Привет,{" "}
-        <span className="font-medium text-gray-900">{user?.email}</span>! Это
+        <span className="font-medium text-espresso">{user?.email}</span>! Это
         личный кабинет. Выбери раздел, чтобы продолжить.
       </p>
 
@@ -45,10 +45,10 @@ export default async function DashboardPage() {
           <Link
             key={s.href}
             href={s.href}
-            className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition hover:border-gray-300 hover:shadow"
+            className="rounded-lg border border-sand bg-card p-5 shadow-sm transition hover:border-sand hover:shadow"
           >
-            <h2 className="font-semibold text-gray-900">{s.title}</h2>
-            <p className="mt-1 text-sm text-gray-600">{s.text}</p>
+            <h2 className="font-semibold text-espresso">{s.title}</h2>
+            <p className="mt-1 text-sm text-muted">{s.text}</p>
           </Link>
         ))}
       </div>

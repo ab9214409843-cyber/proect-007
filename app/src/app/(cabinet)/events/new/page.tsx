@@ -14,12 +14,12 @@ export default async function NewEventPage({
     <div className="mx-auto max-w-2xl">
       <Link
         href="/events"
-        className="text-sm font-medium text-gray-500 transition hover:text-gray-900"
+        className="text-sm font-medium text-muted transition hover:text-espresso"
       >
         ← К мероприятиям
       </Link>
 
-      <h1 className="mt-3 text-2xl font-semibold text-gray-900">
+      <h1 className="mt-3 font-serif text-2xl font-semibold tracking-tight text-espresso">
         Новое мероприятие
       </h1>
 

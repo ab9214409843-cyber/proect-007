@@ -18,7 +18,7 @@ export default function MobileNav() {
         aria-label="Меню"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="rounded-md border border-gray-300 bg-white p-2 text-gray-700 transition hover:bg-gray-100"
+        className="rounded-lg border border-sand bg-card p-2 text-espresso transition hover:bg-paper-2"
       >
         {/* Иконка-гамбургер / крестик */}
         <svg
@@ -46,7 +46,7 @@ export default function MobileNav() {
             onClick={() => setOpen(false)}
             role="presentation"
           />
-          <nav className="absolute left-4 right-4 z-40 mt-2 flex flex-col gap-1 rounded-lg border border-gray-200 bg-white p-2 shadow-lg">
+          <nav className="absolute left-4 right-4 z-40 mt-2 flex flex-col gap-1 rounded-xl border border-sand bg-card p-2 shadow-xl shadow-espresso/10">
             {navItems.map((item) => {
               const active =
                 pathname === item.href || pathname.startsWith(item.href + "/");
@@ -56,10 +56,10 @@ export default function MobileNav() {
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={
-                    "rounded-md px-3 py-2 text-sm font-medium transition " +
+                    "rounded-lg px-3 py-2 text-sm font-medium transition " +
                     (active
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-700 hover:bg-gray-100")
+                      ? "bg-espresso text-paper"
+                      : "text-espresso hover:bg-paper-2")
                   }
                 >
                   {item.label}

@@ -36,13 +36,13 @@ export default async function NotePage({
     <div className="mx-auto max-w-4xl">
       <Link
         href="/experience"
-        className="text-sm font-medium text-gray-500 transition hover:text-gray-900"
+        className="text-sm font-medium text-muted transition hover:text-espresso"
       >
         ← К базе опыта
       </Link>
 
       <div className="mt-3 flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold text-gray-900">{note.title}</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-espresso">{note.title}</h1>
         <span className={badgeBase + " " + kindBadgeClass(note.kind)}>
           {kindLabel(note.kind)}
         </span>
@@ -59,13 +59,13 @@ export default async function NotePage({
 
       {/* Основные поля */}
       <dl className="mt-8 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <dt className="text-xs uppercase tracking-wide text-gray-500">Мероприятие</dt>
-          <dd className="mt-1 text-gray-900">
+        <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-muted">Мероприятие</dt>
+          <dd className="mt-1 text-espresso">
             {note.events ? (
               <Link
                 href={`/events/${note.events.id}`}
-                className="text-gray-900 underline-offset-2 hover:underline"
+                className="text-espresso underline-offset-2 hover:underline"
               >
                 {note.events.title}
               </Link>
@@ -74,15 +74,15 @@ export default async function NotePage({
             )}
           </dd>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <dt className="text-xs uppercase tracking-wide text-gray-500">Добавлена</dt>
-          <dd className="mt-1 text-gray-900">{formatEventDate(note.created_at)}</dd>
+        <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-muted">Добавлена</dt>
+          <dd className="mt-1 text-espresso">{formatEventDate(note.created_at)}</dd>
         </div>
       </dl>
 
-      <div className="mt-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-        <dt className="text-xs uppercase tracking-wide text-gray-500">Текст вывода</dt>
-        <dd className="mt-1 whitespace-pre-wrap text-gray-900">
+      <div className="mt-4 rounded-lg border border-sand bg-card p-4 shadow-sm">
+        <dt className="text-xs uppercase tracking-wide text-muted">Текст вывода</dt>
+        <dd className="mt-1 whitespace-pre-wrap text-espresso">
           {note.description ?? "—"}
         </dd>
       </div>

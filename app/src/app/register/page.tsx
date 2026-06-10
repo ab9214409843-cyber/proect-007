@@ -10,9 +10,9 @@ export default async function RegisterPage({
   const { error } = await searchParams;
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-        <h1 className="mb-6 text-2xl font-semibold text-gray-900">Регистрация</h1>
+    <main className="flex min-h-screen items-center justify-center bg-paper-2 p-4">
+      <div className="w-full max-w-sm rounded-lg border border-sand bg-card p-8 shadow-sm">
+        <h1 className="mb-6 font-serif text-2xl font-semibold tracking-tight text-espresso">Регистрация</h1>
 
         {error && (
           <p className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
@@ -21,7 +21,7 @@ export default async function RegisterPage({
         )}
 
         <form className="flex flex-col gap-4">
-          <label className="flex flex-col gap-1 text-sm text-gray-700">
+          <label className="flex flex-col gap-1 text-sm text-espresso">
             Email
             <input
               name="email"
@@ -31,7 +31,7 @@ export default async function RegisterPage({
               className={inputBase}
             />
           </label>
-          <label className="flex flex-col gap-1 text-sm text-gray-700">
+          <label className="flex flex-col gap-1 text-sm text-espresso">
             Пароль
             <input
               name="password"
@@ -47,9 +47,9 @@ export default async function RegisterPage({
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-600">
+        <p className="mt-6 text-center text-sm text-muted">
           Уже есть аккаунт?{" "}
-          <Link href="/login" className="font-medium text-gray-900 underline">
+          <Link href="/login" className="font-medium text-espresso underline">
             Войти
           </Link>
         </p>

@@ -11,12 +11,12 @@ export default function EmptyState({
   return (
     <div
       className={
-        "rounded-lg border border-dashed border-gray-300 bg-white p-10 text-center " +
+        "rounded-2xl border border-dashed border-sand bg-card/60 p-10 text-center " +
         className
       }
     >
-      <p className="text-gray-700">{title}</p>
-      {hint && <p className="mt-1 text-sm text-gray-500">{hint}</p>}
+      <p className="text-espresso">{title}</p>
+      {hint && <p className="mt-1 text-sm text-muted">{hint}</p>}
     </div>
   );
 }

@@ -43,13 +43,13 @@ export default async function EventsPage() {
             <li key={event.id}>
               <Link
                 href={`/events/${event.id}`}
-                className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition hover:border-gray-300 hover:shadow"
+                className="flex items-center justify-between gap-4 rounded-lg border border-sand bg-card p-5 shadow-sm transition hover:border-sand hover:shadow"
               >
                 <div className="min-w-0">
-                  <h2 className="truncate font-semibold text-gray-900">
+                  <h2 className="truncate font-semibold text-espresso">
                     {event.title}
                   </h2>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm text-muted">
                     {formatEventRange(event.start_date, event.end_date)}
                     {event.location ? ` · ${event.location}` : ""}
                   </p>

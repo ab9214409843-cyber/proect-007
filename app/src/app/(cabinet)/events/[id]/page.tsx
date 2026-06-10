@@ -76,13 +76,13 @@ export default async function EventPage({
     <div className="mx-auto max-w-4xl">
       <Link
         href="/events"
-        className="text-sm font-medium text-gray-500 transition hover:text-gray-900"
+        className="text-sm font-medium text-muted transition hover:text-espresso"
       >
         ← К мероприятиям
       </Link>
 
       <div className="mt-3 flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold text-gray-900">{event.title}</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-espresso">{event.title}</h1>
         <span className={badgeBase + " " + statusBadgeClass(event.status)}>
           {statusLabel(event.status)}
         </span>
@@ -94,24 +94,24 @@ export default async function EventPage({
 
       {/* Основные поля */}
       <dl className="mt-8 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <dt className="text-xs uppercase tracking-wide text-gray-500">Дата</dt>
-          <dd className="mt-1 text-gray-900">
+        <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-muted">Дата</dt>
+          <dd className="mt-1 text-espresso">
             {formatEventRange(event.start_date, event.end_date)}
           </dd>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <dt className="text-xs uppercase tracking-wide text-gray-500">
+        <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-muted">
             Место
           </dt>
-          <dd className="mt-1 text-gray-900">{event.location ?? "—"}</dd>
+          <dd className="mt-1 text-espresso">{event.location ?? "—"}</dd>
         </div>
         {event.description && (
-          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:col-span-2">
-            <dt className="text-xs uppercase tracking-wide text-gray-500">
+          <div className="rounded-lg border border-sand bg-card p-4 shadow-sm sm:col-span-2">
+            <dt className="text-xs uppercase tracking-wide text-muted">
               Описание
             </dt>
-            <dd className="mt-1 whitespace-pre-line text-gray-900">
+            <dd className="mt-1 whitespace-pre-line text-espresso">
               {event.description}
             </dd>
           </div>
@@ -122,7 +122,7 @@ export default async function EventPage({
       <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
         <form action={updateEventStatus} className="flex items-end gap-2">
           <input type="hidden" name="id" value={event.id} />
-          <label className="flex flex-col gap-1 text-sm text-gray-700">
+          <label className="flex flex-col gap-1 text-sm text-espresso">
             Статус
             <select
               name="status"
@@ -157,7 +157,7 @@ export default async function EventPage({
       {/* Задачи — автоплан (этап 5) + ручное управление (этап 6) */}
       <section className="mt-10">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900">План задач</h2>
+          <h2 className="font-serif text-lg font-semibold text-espresso">План задач</h2>
           <Link href={`/tasks/new?event=${event.id}`} className={btnSecondary}>
             + Добавить задачу
           </Link>
@@ -167,10 +167,10 @@ export default async function EventPage({
             {tasks.map((task) => (
               <li key={task.id} className={rowCard}>
                 <Link href={`/tasks/${task.id}`} className="min-w-0 flex-1">
-                  <p className="font-medium text-gray-900 hover:underline">
+                  <p className="font-medium text-espresso hover:underline">
                     {task.title}
                   </p>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm text-muted">
                     Срок: {formatEventDate(task.due_date)}
                   </p>
                 </Link>
@@ -207,7 +207,7 @@ export default async function EventPage({
       {/* Документы мероприятия (этап 7) */}
       <section className="mt-10">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900">Документы</h2>
+          <h2 className="font-serif text-lg font-semibold text-espresso">Документы</h2>
           <Link href={`/documents/new?event=${event.id}`} className={btnSecondary}>
             + Добавить документ
           </Link>
@@ -217,10 +217,10 @@ export default async function EventPage({
             {documents.map((doc) => (
               <li key={doc.id} className={rowCard}>
                 <Link href={`/documents/${doc.id}`} className="min-w-0 flex-1">
-                  <p className="truncate font-medium text-gray-900 hover:underline">
+                  <p className="truncate font-medium text-espresso hover:underline">
                     {doc.title}
                   </p>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm text-muted">
                     {formatFileSize(doc.file_size)}
                   </p>
                 </Link>
@@ -255,7 +255,7 @@ export default async function EventPage({
       {/* Заметки опыта мероприятия (этап 8) */}
       <section className="mt-10">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900">Заметки опыта</h2>
+          <h2 className="font-serif text-lg font-semibold text-espresso">Заметки опыта</h2>
           <Link href={`/experience/new?event=${event.id}`} className={btnSecondary}>
             + Добавить заметку
           </Link>
@@ -265,7 +265,7 @@ export default async function EventPage({
             {notes.map((note) => (
               <li key={note.id} className={rowCard}>
                 <Link href={`/experience/${note.id}`} className="min-w-0 flex-1">
-                  <p className="truncate font-medium text-gray-900 hover:underline">
+                  <p className="truncate font-medium text-espresso hover:underline">
                     {note.title}
                   </p>
                 </Link>

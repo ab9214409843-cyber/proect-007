@@ -135,10 +135,10 @@ export default async function DocumentsPage({
           {documents.map((doc) => (
             <li key={doc.id} className={rowCard}>
               <Link href={`/documents/${doc.id}`} className="min-w-0 flex-1">
-                <p className="truncate font-medium text-gray-900 hover:underline">
+                <p className="truncate font-medium text-espresso hover:underline">
                   {doc.title}
                 </p>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-muted">
                   {formatFileSize(doc.file_size)}
                   {doc.events && <> · {doc.events.title}</>}
                   <> · {formatEventDate(doc.created_at)}</>

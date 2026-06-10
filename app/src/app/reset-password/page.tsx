@@ -11,12 +11,12 @@ export default async function ResetPasswordPage({
   const { error } = await searchParams;
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-        <h1 className="mb-2 text-2xl font-semibold text-gray-900">
+    <main className="flex min-h-screen items-center justify-center bg-paper-2 p-4">
+      <div className="w-full max-w-sm rounded-lg border border-sand bg-card p-8 shadow-sm">
+        <h1 className="mb-2 font-serif text-2xl font-semibold tracking-tight text-espresso">
           Новый пароль
         </h1>
-        <p className="mb-6 text-sm text-gray-600">
+        <p className="mb-6 text-sm text-muted">
           Придумай новый пароль — минимум 8 символов.
         </p>
 
@@ -27,7 +27,7 @@ export default async function ResetPasswordPage({
         )}
 
         <form className="flex flex-col gap-4">
-          <label className="flex flex-col gap-1 text-sm text-gray-700">
+          <label className="flex flex-col gap-1 text-sm text-espresso">
             Новый пароль
             <input
               name="password"

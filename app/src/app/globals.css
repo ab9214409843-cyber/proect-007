@@ -1,15 +1,31 @@
 @import "tailwindcss";
 
+/* Палитра «тёплая редакционная роскошь» (дизайн v2).
+   Единый источник цвета — менять вид приложения можно отсюда. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f1e8; /* paper — тёплый крем */
+  --foreground: #2b2420; /* espresso — основной текст */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* Именованная палитра — доступна как bg-paper, text-espresso, border-sand и т.д. */
+  --color-paper: #f6f1e8;
+  --color-paper-2: #efe7d8;
+  --color-card: #fcfaf5;
+  --color-espresso: #2b2420;
+  --color-espresso-7: #3c3329;
+  --color-muted: #6e6356;
+  --color-sand: #e5dbc9;
+  --color-clay: #b4552d;
+  --color-clay-7: #98421f;
+
+  /* Шрифты */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-fraunces);
 }
 
 body {

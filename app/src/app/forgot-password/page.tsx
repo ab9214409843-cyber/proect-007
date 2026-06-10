@@ -11,12 +11,12 @@ export default async function ForgotPasswordPage({
   const { error } = await searchParams;
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-        <h1 className="mb-2 text-2xl font-semibold text-gray-900">
+    <main className="flex min-h-screen items-center justify-center bg-paper-2 p-4">
+      <div className="w-full max-w-sm rounded-lg border border-sand bg-card p-8 shadow-sm">
+        <h1 className="mb-2 font-serif text-2xl font-semibold tracking-tight text-espresso">
           Сброс пароля
         </h1>
-        <p className="mb-6 text-sm text-gray-600">
+        <p className="mb-6 text-sm text-muted">
           Укажи email — пришлём ссылку для смены пароля.
         </p>
 
@@ -27,7 +27,7 @@ export default async function ForgotPasswordPage({
         )}
 
         <form className="flex flex-col gap-4">
-          <label className="flex flex-col gap-1 text-sm text-gray-700">
+          <label className="flex flex-col gap-1 text-sm text-espresso">
             Email
             <input
               name="email"
@@ -42,9 +42,9 @@ export default async function ForgotPasswordPage({
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-600">
+        <p className="mt-6 text-center text-sm text-muted">
           Вспомнил пароль?{" "}
-          <Link href="/login" className="font-medium text-gray-900 underline">
+          <Link href="/login" className="font-medium text-espresso underline">
             Войти
           </Link>
         </p>

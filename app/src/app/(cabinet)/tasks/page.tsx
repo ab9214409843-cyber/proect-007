@@ -142,10 +142,10 @@ export default async function TasksPage({
           {tasks.map((task) => (
             <li key={task.id} className={rowCard}>
               <Link href={`/tasks/${task.id}`} className="min-w-0 flex-1">
-                <p className="font-medium text-gray-900 hover:underline">
+                <p className="font-medium text-espresso hover:underline">
                   {task.title}
                 </p>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-muted">
                   Срок: {formatEventDate(task.due_date)}
                   {task.events && <> · {task.events.title}</>}
                 </p>

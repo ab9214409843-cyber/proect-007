@@ -20,7 +20,7 @@ export default function EventForm({
     <form action={action} className="mt-8 flex max-w-2xl flex-col gap-5">
       {event && <input type="hidden" name="id" value={event.id} />}
 
-      <label className="flex flex-col gap-1 text-sm text-gray-700">
+      <label className="flex flex-col gap-1 text-sm text-espresso">
         Название <span className="text-red-500">*</span>
         <input
           name="title"
@@ -33,7 +33,7 @@ export default function EventForm({
         />
       </label>
 
-      <label className="flex flex-col gap-1 text-sm text-gray-700">
+      <label className="flex flex-col gap-1 text-sm text-espresso">
         Тип мероприятия <span className="text-red-500">*</span>
         <select
           name="event_type"
@@ -53,7 +53,7 @@ export default function EventForm({
       </label>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <label className="flex flex-col gap-1 text-sm text-gray-700">
+        <label className="flex flex-col gap-1 text-sm text-espresso">
           Дата начала <span className="text-red-500">*</span>
           <input
             name="start_date"
@@ -63,7 +63,7 @@ export default function EventForm({
             className={inputBase}
           />
         </label>
-        <label className="flex flex-col gap-1 text-sm text-gray-700">
+        <label className="flex flex-col gap-1 text-sm text-espresso">
           Дата окончания
           <input
             name="end_date"
@@ -74,7 +74,7 @@ export default function EventForm({
         </label>
       </div>
 
-      <label className="flex flex-col gap-1 text-sm text-gray-700">
+      <label className="flex flex-col gap-1 text-sm text-espresso">
         Место проведения
         <input
           name="location"
@@ -86,7 +86,7 @@ export default function EventForm({
         />
       </label>
 
-      <label className="flex flex-col gap-1 text-sm text-gray-700">
+      <label className="flex flex-col gap-1 text-sm text-espresso">
         Описание
         <textarea
           name="description"

@@ -18,10 +18,10 @@ export default function Nav() {
             key={item.href}
             href={item.href}
             className={
-              "rounded-md px-3 py-2 text-sm font-medium transition " +
+              "rounded-lg px-3 py-2 text-sm font-medium transition " +
               (active
-                ? "bg-gray-900 text-white"
-                : "text-gray-700 hover:bg-gray-100")
+                ? "bg-espresso text-paper"
+                : "text-espresso hover:bg-paper-2")
             }
           >
             {item.label}

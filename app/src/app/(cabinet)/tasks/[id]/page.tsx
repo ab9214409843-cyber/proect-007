@@ -37,13 +37,13 @@ export default async function TaskPage({
     <div className="mx-auto max-w-4xl">
       <Link
         href="/tasks"
-        className="text-sm font-medium text-gray-500 transition hover:text-gray-900"
+        className="text-sm font-medium text-muted transition hover:text-espresso"
       >
         ← К задачам
       </Link>
 
       <div className="mt-3 flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold text-gray-900">{task.title}</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-espresso">{task.title}</h1>
         <span className={badgeBase + " " + taskPriorityBadgeClass(task.priority)}>
           {taskPriorityLabel(task.priority)}
         </span>
@@ -58,19 +58,19 @@ export default async function TaskPage({
 
       {/* Основные поля */}
       <dl className="mt-8 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <dt className="text-xs uppercase tracking-wide text-gray-500">Срок</dt>
-          <dd className="mt-1 text-gray-900">{formatEventDate(task.due_date)}</dd>
+        <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-muted">Срок</dt>
+          <dd className="mt-1 text-espresso">{formatEventDate(task.due_date)}</dd>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <dt className="text-xs uppercase tracking-wide text-gray-500">
+        <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-muted">
             Мероприятие
           </dt>
-          <dd className="mt-1 text-gray-900">
+          <dd className="mt-1 text-espresso">
             {task.events ? (
               <Link
                 href={`/events/${task.events.id}`}
-                className="text-gray-900 underline-offset-2 hover:underline"
+                className="text-espresso underline-offset-2 hover:underline"
               >
                 {task.events.title}
               </Link>
@@ -80,11 +80,11 @@ export default async function TaskPage({
           </dd>
         </div>
         {task.description && (
-          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:col-span-2">
-            <dt className="text-xs uppercase tracking-wide text-gray-500">
+          <div className="rounded-lg border border-sand bg-card p-4 shadow-sm sm:col-span-2">
+            <dt className="text-xs uppercase tracking-wide text-muted">
               Описание
             </dt>
-            <dd className="mt-1 whitespace-pre-line text-gray-900">
+            <dd className="mt-1 whitespace-pre-line text-espresso">
               {task.description}
             </dd>
           </div>
@@ -95,7 +95,7 @@ export default async function TaskPage({
       <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
         <form action={updateTaskStatus} className="flex items-end gap-2">
           <input type="hidden" name="id" value={task.id} />
-          <label className="flex flex-col gap-1 text-sm text-gray-700">
+          <label className="flex flex-col gap-1 text-sm text-espresso">
             Статус
             <select
               name="status"

@@ -35,13 +35,13 @@ export default async function DocumentPage({
     <div className="mx-auto max-w-4xl">
       <Link
         href="/documents"
-        className="text-sm font-medium text-gray-500 transition hover:text-gray-900"
+        className="text-sm font-medium text-muted transition hover:text-espresso"
       >
         ← К документам
       </Link>
 
       <div className="mt-3 flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold text-gray-900">{doc.title}</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-espresso">{doc.title}</h1>
         <span className={badgeBase + " " + documentTypeBadgeClass(doc.type)}>
           {documentTypeLabel(doc.type)}
         </span>
@@ -53,23 +53,23 @@ export default async function DocumentPage({
 
       {/* Основные поля */}
       <dl className="mt-8 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <dt className="text-xs uppercase tracking-wide text-gray-500">Файл</dt>
-          <dd className="mt-1 break-all text-gray-900">{doc.file_name ?? "—"}</dd>
+        <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-muted">Файл</dt>
+          <dd className="mt-1 break-all text-espresso">{doc.file_name ?? "—"}</dd>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <dt className="text-xs uppercase tracking-wide text-gray-500">Размер</dt>
-          <dd className="mt-1 text-gray-900">{formatFileSize(doc.file_size)}</dd>
+        <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-muted">Размер</dt>
+          <dd className="mt-1 text-espresso">{formatFileSize(doc.file_size)}</dd>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <dt className="text-xs uppercase tracking-wide text-gray-500">
+        <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-muted">
             Мероприятие
           </dt>
-          <dd className="mt-1 text-gray-900">
+          <dd className="mt-1 text-espresso">
             {doc.events ? (
               <Link
                 href={`/events/${doc.events.id}`}
-                className="text-gray-900 underline-offset-2 hover:underline"
+                className="text-espresso underline-offset-2 hover:underline"
               >
                 {doc.events.title}
               </Link>
@@ -78,9 +78,9 @@ export default async function DocumentPage({
             )}
           </dd>
         </div>
-        <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-          <dt className="text-xs uppercase tracking-wide text-gray-500">Загружен</dt>
-          <dd className="mt-1 text-gray-900">{formatEventDate(doc.created_at)}</dd>
+        <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
+          <dt className="text-xs uppercase tracking-wide text-muted">Загружен</dt>
+          <dd className="mt-1 text-espresso">{formatEventDate(doc.created_at)}</dd>
         </div>
       </dl>
 

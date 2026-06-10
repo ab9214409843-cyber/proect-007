@@ -29,7 +29,7 @@ export default function TaskForm({
     <form action={action} className="mt-8 flex max-w-2xl flex-col gap-5">
       {task && <input type="hidden" name="id" value={task.id} />}
 
-      <label className="flex flex-col gap-1 text-sm text-gray-700">
+      <label className="flex flex-col gap-1 text-sm text-espresso">
         Название <span className="text-red-500">*</span>
         <input
           name="title"
@@ -42,7 +42,7 @@ export default function TaskForm({
         />
       </label>
 
-      <label className="flex flex-col gap-1 text-sm text-gray-700">
+      <label className="flex flex-col gap-1 text-sm text-espresso">
         Описание
         <textarea
           name="description"
@@ -55,7 +55,7 @@ export default function TaskForm({
       </label>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <label className="flex flex-col gap-1 text-sm text-gray-700">
+        <label className="flex flex-col gap-1 text-sm text-espresso">
           Срок
           <input
             name="due_date"
@@ -64,7 +64,7 @@ export default function TaskForm({
             className={inputBase}
           />
         </label>
-        <label className="flex flex-col gap-1 text-sm text-gray-700">
+        <label className="flex flex-col gap-1 text-sm text-espresso">
           Приоритет
           <select
             name="priority"
@@ -81,7 +81,7 @@ export default function TaskForm({
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <label className="flex flex-col gap-1 text-sm text-gray-700">
+        <label className="flex flex-col gap-1 text-sm text-espresso">
           Статус
           <select
             name="status"
@@ -95,7 +95,7 @@ export default function TaskForm({
             ))}
           </select>
         </label>
-        <label className="flex flex-col gap-1 text-sm text-gray-700">
+        <label className="flex flex-col gap-1 text-sm text-espresso">
           Мероприятие
           <select
             name="event_id"

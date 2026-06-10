@@ -146,10 +146,10 @@ export default async function ExperiencePage({
           {notes.map((note) => (
             <li key={note.id} className={rowCard}>
               <Link href={`/experience/${note.id}`} className="min-w-0 flex-1">
-                <p className="truncate font-medium text-gray-900 hover:underline">
+                <p className="truncate font-medium text-espresso hover:underline">
                   {note.title}
                 </p>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-muted">
                   {note.events && <>{note.events.title} · </>}
                   {formatEventDate(note.created_at)}
                 </p>

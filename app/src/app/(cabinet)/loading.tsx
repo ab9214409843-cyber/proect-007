@@ -2,7 +2,7 @@
 export default function CabinetLoading() {
   return (
     <div className="flex min-h-[40vh] items-center justify-center">
-      <p className="animate-pulse text-sm text-gray-500">Загрузка…</p>
+      <p className="animate-pulse text-sm text-muted">Загрузка…</p>
     </div>
   );
 }

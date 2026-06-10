@@ -1,144 +1,203 @@
+import Image from "next/image";
 import Link from "next/link";
+
+// Публичная главная — «тёплая редакционная роскошь» (дизайн v2).
+// Серверный компонент: без интерактива, только разметка.
+
+const steps = [
+  {
+    n: "01",
+    title: "Создаёте мероприятие",
+    text: "Название, тип, дата и место — всего за минуту.",
+  },
+  {
+    n: "02",
+    title: "Получаете план подготовки",
+    text: "Система сама расставляет задачи по датам — по проверенной методике.",
+  },
+  {
+    n: "03",
+    title: "Ведёте задачи и документы",
+    text: "Видите, что и когда нужно сделать, и храните все файлы рядом.",
+  },
+  {
+    n: "04",
+    title: "Фиксируете опыт",
+    text: "После мероприятия записываете выводы — они пригодятся в следующий раз.",
+  },
+];
+
+const features = [
+  {
+    title: "Мероприятия",
+    text: "Все мероприятия в одном списке: статус, даты, место.",
+  },
+  {
+    title: "Автоматический план",
+    text: "Задачи создаются сами от даты мероприятия — ничего не забыто.",
+  },
+  {
+    title: "Задачи",
+    text: "Сроки, статусы и приоритеты. Видно, что в работе прямо сейчас.",
+  },
+  {
+    title: "Документы",
+    text: "Положение, смета, приказ, сценарий — всё рядом с мероприятием.",
+  },
+  {
+    title: "База опыта",
+    text: "Что прошло хорошо, где ошиблись, что улучшить в следующий раз.",
+  },
+  {
+    title: "Спокойные сроки",
+    text: "Понятная картина подготовки — без авралов и забытых дел.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white text-gray-900">
-      {/* Мини-шапка */}
-      <header className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
-        <span className="text-sm font-semibold tracking-widest text-gray-900">
-          PROECT_007
+    <div className="min-h-screen bg-paper text-espresso">
+      {/* Полоса-анонс */}
+      <div className="bg-espresso px-6 py-2 text-center text-xs tracking-wide text-paper/80">
+        EventOS — спокойная и предсказуемая подготовка мероприятий
+      </div>
+
+      {/* Шапка */}
+      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        <span className="font-serif text-2xl font-semibold tracking-tight">
+          Event<span className="text-clay">OS</span>
         </span>
         <Link
           href="/login"
-          className="text-sm font-medium text-gray-700 transition hover:text-gray-900"
+          className="text-sm font-medium text-espresso transition hover:text-clay"
         >
           Войти →
         </Link>
       </header>
 
       {/* Hero */}
-      <section className="mx-auto max-w-5xl px-6 pb-20 pt-12 sm:pt-20">
-        <p className="mb-4 text-sm font-medium uppercase tracking-widest text-gray-500">
+      <section className="mx-auto max-w-6xl px-6 pt-10 text-center sm:pt-16">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
           Платформа для организаторов мероприятий
         </p>
-        <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight text-gray-900 sm:text-6xl">
+        <h1 className="mx-auto mt-5 max-w-4xl font-serif text-5xl font-semibold leading-[1.05] tracking-tight text-espresso sm:text-7xl">
           Всё для подготовки мероприятия — в одном месте
         </h1>
-        <p className="mt-6 max-w-2xl text-lg text-gray-600">
-          Создайте мероприятие, получите готовый план подготовки по датам,
-          ведите задачи и документы, фиксируйте опыт. Чтобы каждое следующее
-          мероприятие проходило спокойнее предыдущего.
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
+          Создайте мероприятие, получите готовый план подготовки по датам, ведите
+          задачи и документы, фиксируйте опыт. Чтобы каждое следующее мероприятие
+          проходило спокойнее предыдущего.
         </p>
-        <div className="mt-10 flex flex-wrap gap-4">
+        <div className="mt-9 flex flex-wrap justify-center gap-4">
           <Link
             href="/register"
-            className="rounded-md bg-gray-900 px-7 py-3 text-base font-medium text-white transition hover:bg-gray-700"
+            className="rounded-full bg-espresso px-8 py-3 text-base font-medium text-paper transition hover:bg-espresso-7"
           >
             Начать
           </Link>
           <Link
             href="/login"
-            className="rounded-md border border-gray-300 bg-white px-7 py-3 text-base font-medium text-gray-900 transition hover:bg-gray-100"
+            className="rounded-full border border-sand bg-card px-8 py-3 text-base font-medium text-espresso transition hover:bg-paper-2"
           >
             Войти
           </Link>
         </div>
+
+        {/* Большое фото */}
+        <div className="relative mt-14 aspect-[16/9] w-full overflow-hidden rounded-3xl border border-sand shadow-xl shadow-espresso/10">
+          <Image
+            src="/images/hero-hall.jpg"
+            alt="Подготовленный банкетный зал для мероприятия"
+            fill
+            priority
+            sizes="(max-width: 1152px) 100vw, 1152px"
+            className="object-cover"
+          />
+        </div>
       </section>
 
       {/* Проблема организаторов */}
-      <section className="border-t border-gray-100 bg-gray-50">
-        <div className="mx-auto max-w-5xl px-6 py-16">
-          <h2 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl">
+      <section className="mt-24 bg-paper-2">
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
+            Знакомо?
+          </p>
+          <h2 className="mt-4 max-w-3xl font-serif text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
             Подготовка мероприятия — это десятки дел и сжатые сроки
           </h2>
-          <p className="mt-4 max-w-3xl text-lg text-gray-600">
+          <p className="mt-5 max-w-3xl text-lg text-muted">
             Задачи держатся в голове и в разных чатах, документы разбросаны по
             папкам, сроки подходят неожиданно, а ценный опыт прошлых мероприятий
-            теряется и каждый раз приходится начинать с нуля.
+            теряется — и каждый раз приходится начинать с нуля.
           </p>
-          <p className="mt-4 max-w-3xl text-lg font-medium text-gray-900">
-            Эта платформа собирает подготовку в единую и предсказуемую систему.
+          <p className="mt-4 max-w-3xl text-lg font-medium text-espresso">
+            EventOS собирает подготовку в единую и предсказуемую систему.
           </p>
         </div>
       </section>
 
       {/* Как это работает */}
-      <section className="mx-auto max-w-5xl px-6 py-16">
-        <h2 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl">
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
           Как это работает
+        </p>
+        <h2 className="mt-4 font-serif text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
+          Четыре спокойных шага
         </h2>
-        <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              n: "1",
-              title: "Создаёте мероприятие",
-              text: "Название, тип, дата и место — всего за минуту.",
-            },
-            {
-              n: "2",
-              title: "Получаете план подготовки",
-              text: "Система сама расставляет задачи по датам — по проверенной методике.",
-            },
-            {
-              n: "3",
-              title: "Ведёте задачи и документы",
-              text: "Видите, что и когда нужно сделать, и храните все файлы рядом.",
-            },
-            {
-              n: "4",
-              title: "Фиксируете опыт",
-              text: "После мероприятия записываете выводы — они пригодятся в следующий раз.",
-            },
-          ].map((step) => (
+        <ol className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {steps.map((step) => (
             <li
               key={step.n}
-              className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
+              className="rounded-2xl border border-sand bg-card p-6 shadow-sm shadow-espresso/5"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-900 text-sm font-semibold text-white">
+              <span className="font-serif text-3xl font-semibold text-clay">
                 {step.n}
               </span>
-              <h3 className="mt-4 font-semibold text-gray-900">{step.title}</h3>
-              <p className="mt-2 text-sm text-gray-600">{step.text}</p>
+              <h3 className="mt-4 font-serif text-lg font-semibold text-espresso">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-sm text-muted">{step.text}</p>
             </li>
           ))}
         </ol>
       </section>
 
+      {/* Редакционное фото-вставка */}
+      <section className="mx-auto max-w-6xl px-6 pb-4">
+        <div className="relative aspect-[21/9] w-full overflow-hidden rounded-3xl border border-sand shadow-lg shadow-espresso/10">
+          <Image
+            src="/images/banquet.jpg"
+            alt="Сервированный стол с цветами на мероприятии"
+            fill
+            sizes="(max-width: 1152px) 100vw, 1152px"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-espresso/50 to-transparent" />
+          <p className="absolute bottom-6 left-6 right-6 max-w-xl font-serif text-2xl font-semibold leading-snug text-paper sm:text-3xl">
+            Каждая деталь продумана заранее — и день мероприятия проходит спокойно.
+          </p>
+        </div>
+      </section>
+
       {/* Возможности */}
-      <section className="border-t border-gray-100 bg-gray-50">
-        <div className="mx-auto max-w-5xl px-6 py-16">
-          <h2 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl">
+      <section className="mt-20 bg-paper-2">
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
             Возможности
+          </p>
+          <h2 className="mt-4 font-serif text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
+            Всё, что нужно организатору
           </h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "Мероприятия",
-                text: "Все мероприятия в одном списке: статус, даты, место.",
-              },
-              {
-                title: "Автоматический план",
-                text: "Задачи создаются сами от даты мероприятия — ничего не забыто.",
-              },
-              {
-                title: "Задачи",
-                text: "Сроки, статусы и приоритеты. Видно, что в работе прямо сейчас.",
-              },
-              {
-                title: "Документы",
-                text: "Положение, смета, приказ, сценарий — всё рядом с мероприятием.",
-              },
-              {
-                title: "База опыта",
-                text: "Что прошло хорошо, где ошиблись, что улучшить в следующий раз.",
-              },
-            ].map((f) => (
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map((f) => (
               <div
                 key={f.title}
-                className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
+                className="rounded-2xl border border-sand bg-card p-6 shadow-sm shadow-espresso/5"
               >
-                <h3 className="font-semibold text-gray-900">{f.title}</h3>
-                <p className="mt-2 text-sm text-gray-600">{f.text}</p>
+                <h3 className="font-serif text-lg font-semibold text-espresso">
+                  {f.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted">{f.text}</p>
               </div>
             ))}
           </div>
@@ -146,11 +205,14 @@ export default function Home() {
       </section>
 
       {/* Для кого */}
-      <section className="mx-auto max-w-5xl px-6 py-16">
-        <h2 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl">
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
           Для кого
+        </p>
+        <h2 className="mt-4 font-serif text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
+          Для тех, кто отвечает за мероприятие
         </h2>
-        <p className="mt-4 max-w-3xl text-lg text-gray-600">
+        <p className="mt-5 max-w-3xl text-lg text-muted">
           Для специалистов, которые отвечают за организацию мероприятий:
           спортивных, познавательных и других. Первая версия создаётся под
           организаторов спортивных мероприятий и опирается на реальный процесс
@@ -159,26 +221,31 @@ export default function Home() {
       </section>
 
       {/* Финальный призыв */}
-      <section className="border-t border-gray-100 bg-gray-900">
-        <div className="mx-auto max-w-5xl px-6 py-16 text-center">
-          <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+      <section className="bg-espresso">
+        <div className="mx-auto max-w-6xl px-6 py-20 text-center">
+          <h2 className="mx-auto max-w-2xl font-serif text-3xl font-semibold tracking-tight text-paper sm:text-4xl">
             Готовы навести порядок в подготовке?
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-gray-300">
+          <p className="mx-auto mt-4 max-w-xl text-paper/70">
             Заведите первое мероприятие — план подготовки появится автоматически.
           </p>
           <Link
             href="/register"
-            className="mt-8 inline-block rounded-md bg-white px-7 py-3 text-base font-medium text-gray-900 transition hover:bg-gray-100"
+            className="mt-9 inline-block rounded-full bg-paper px-8 py-3 text-base font-medium text-espresso transition hover:bg-paper-2"
           >
-            Начать
+            Начать бесплатно
           </Link>
         </div>
       </section>
 
       {/* Подвал */}
-      <footer className="mx-auto max-w-5xl px-6 py-8 text-sm text-gray-500">
-        Proect_007 — сервис для организаторов мероприятий.
+      <footer className="bg-espresso">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 border-t border-paper/10 px-6 py-10 text-sm text-paper/60 sm:flex-row sm:items-center sm:justify-between">
+          <span className="font-serif text-lg font-semibold text-paper">
+            Event<span className="text-clay">OS</span>
+          </span>
+          <span>Сервис для организаторов мероприятий.</span>
+        </div>
       </footer>
     </div>
   );

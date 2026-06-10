@@ -28,7 +28,7 @@ export default function ConfirmDeleteButton({
       </button>
 
       <Modal open={open} onClose={() => setOpen(false)} title={title}>
-        <p className="mt-2 text-sm text-gray-600">{message}</p>
+        <p className="mt-2 text-sm text-muted">{message}</p>
         <div className="mt-6 flex justify-end gap-3">
           <button
             type="button"

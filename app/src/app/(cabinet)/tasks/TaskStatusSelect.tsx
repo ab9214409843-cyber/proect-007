@@ -26,7 +26,7 @@ export default function TaskStatusSelect({
         defaultValue={status}
         onChange={() => formRef.current?.requestSubmit()}
         className={
-          "cursor-pointer rounded-full border-0 px-2.5 py-1 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-gray-300 " +
+          "cursor-pointer rounded-full border-0 px-2.5 py-1 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-sand " +
           taskStatusBadgeClass(status)
         }
       >

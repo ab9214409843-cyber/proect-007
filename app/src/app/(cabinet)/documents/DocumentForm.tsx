@@ -37,17 +37,17 @@ export default function DocumentForm({
 
       {isEdit ? (
         // При редактировании файл не меняем — показываем, какой прикреплён.
-        <div className="rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-600">
-          Файл: <span className="text-gray-900">{document!.file_name ?? "—"}</span>
+        <div className="rounded-md border border-sand bg-paper-2 px-3 py-2 text-sm text-muted">
+          Файл: <span className="text-espresso">{document!.file_name ?? "—"}</span>
           {document!.file_size != null && (
             <> · {formatFileSize(document!.file_size)}</>
           )}
-          <p className="mt-1 text-xs text-gray-500">
+          <p className="mt-1 text-xs text-muted">
             Сам файл заменить нельзя — для нового файла загрузи документ заново.
           </p>
         </div>
       ) : (
-        <label className="flex flex-col gap-1 text-sm text-gray-700">
+        <label className="flex flex-col gap-1 text-sm text-espresso">
           Файл <span className="text-red-500">*</span>
           <input
             name="file"
@@ -55,14 +55,14 @@ export default function DocumentForm({
             required
             className={
               inputBase +
-              " file:mr-3 file:rounded file:border-0 file:bg-gray-900 file:px-3 file:py-1 file:text-sm file:text-white hover:file:bg-gray-700"
+              " file:mr-3 file:rounded file:border-0 file:bg-espresso file:px-3 file:py-1 file:text-sm file:text-paper hover:file:bg-espresso-7"
             }
           />
-          <span className="text-xs text-gray-500">Любой файл до 25 МБ.</span>
+          <span className="text-xs text-muted">Любой файл до 25 МБ.</span>
         </label>
       )}
 
-      <label className="flex flex-col gap-1 text-sm text-gray-700">
+      <label className="flex flex-col gap-1 text-sm text-espresso">
         Название
         <input
           name="title"
@@ -75,7 +75,7 @@ export default function DocumentForm({
       </label>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <label className="flex flex-col gap-1 text-sm text-gray-700">
+        <label className="flex flex-col gap-1 text-sm text-espresso">
           Тип документа
           <select
             name="type"
@@ -89,7 +89,7 @@ export default function DocumentForm({
             ))}
           </select>
         </label>
-        <label className="flex flex-col gap-1 text-sm text-gray-700">
+        <label className="flex flex-col gap-1 text-sm text-espresso">
           Мероприятие
           <select
             name="event_id"

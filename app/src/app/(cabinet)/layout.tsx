@@ -21,14 +21,14 @@ export default async function CabinetLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-paper">
       {/* Боковое меню */}
-      <aside className="hidden w-60 shrink-0 flex-col border-r border-gray-200 bg-white p-4 sm:flex">
+      <aside className="hidden w-60 shrink-0 flex-col border-r border-sand bg-card p-4 sm:flex">
         <Link
           href="/dashboard"
-          className="mb-6 px-3 text-sm font-semibold tracking-widest text-gray-900"
+          className="mb-6 px-3 font-serif text-xl font-semibold tracking-tight text-espresso"
         >
-          PROECT_007
+          Event<span className="text-clay">OS</span>
         </Link>
         <Nav />
       </aside>
@@ -36,10 +36,10 @@ export default async function CabinetLayout({
       {/* Основная часть */}
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Шапка */}
-        <header className="relative flex items-center gap-4 border-b border-gray-200 bg-white px-6 py-3">
+        <header className="relative flex items-center gap-4 border-b border-sand bg-card px-6 py-3">
           {/* Меню-гамбургер для узких экранов */}
           <MobileNav />
-          <span className="hidden text-sm text-gray-500 sm:inline">
+          <span className="hidden text-sm text-muted sm:inline">
             {user.email}
           </span>
           <form action={signOut} className="ml-auto">
