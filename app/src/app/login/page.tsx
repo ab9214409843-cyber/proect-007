@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { login } from "./actions";
+import { btnPrimary, inputBase } from "@/components/ui";
 
 export default async function LoginPage({
   searchParams,
@@ -32,7 +33,7 @@ export default async function LoginPage({
               type="email"
               required
               autoComplete="email"
-              className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+              className={inputBase}
             />
           </label>
           <label className="flex flex-col gap-1 text-sm text-gray-700">
@@ -41,15 +42,12 @@ export default async function LoginPage({
               name="password"
               type="password"
               required
-              minLength={6}
+              minLength={8}
               autoComplete="current-password"
-              className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+              className={inputBase}
             />
           </label>
-          <button
-            formAction={login}
-            className="mt-2 rounded-md bg-gray-900 px-4 py-2 text-white transition hover:bg-gray-700"
-          >
+          <button formAction={login} className={btnPrimary + " mt-2"}>
             Войти
           </button>
         </form>

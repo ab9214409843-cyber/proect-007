@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import PageHeader from "@/components/PageHeader";
 
 const sections = [
   {
@@ -32,11 +33,11 @@ export default async function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-4xl">
-      <h1 className="text-2xl font-semibold text-gray-900">Обзор</h1>
+      <PageHeader title="Обзор" />
       <p className="mt-2 text-gray-600">
         Привет,{" "}
         <span className="font-medium text-gray-900">{user?.email}</span>! Это
-        личный кабинет. Разделы наполнятся на следующих этапах — пока это каркас.
+        личный кабинет. Выбери раздел, чтобы продолжить.
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">

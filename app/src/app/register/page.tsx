@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { signup } from "./actions";
+import { btnPrimary, inputBase } from "@/components/ui";
 
 export default async function RegisterPage({
   searchParams,
@@ -27,7 +28,7 @@ export default async function RegisterPage({
               type="email"
               required
               autoComplete="email"
-              className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+              className={inputBase}
             />
           </label>
           <label className="flex flex-col gap-1 text-sm text-gray-700">
@@ -38,13 +39,10 @@ export default async function RegisterPage({
               required
               minLength={8}
               autoComplete="new-password"
-              className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+              className={inputBase}
             />
           </label>
-          <button
-            formAction={signup}
-            className="mt-2 rounded-md bg-gray-900 px-4 py-2 text-white transition hover:bg-gray-700"
-          >
+          <button formAction={signup} className={btnPrimary + " mt-2"}>
             Зарегистрироваться
           </button>
         </form>

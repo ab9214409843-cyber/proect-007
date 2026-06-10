@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { EVENT_TYPES, type EventRow } from "@/lib/events";
 import { MAX_TEXT_LEN, MAX_TITLE_LEN } from "@/lib/validation";
+import { btnPrimary, btnSecondary, inputBase } from "@/components/ui";
 
 // Общая форма создания/редактирования мероприятия.
 // action — server action (createEvent или updateEvent); event — для предзаполнения при редактировании.
@@ -28,7 +29,7 @@ export default function EventForm({
           maxLength={MAX_TITLE_LEN}
           defaultValue={event?.title ?? ""}
           placeholder="Например: Кубок по гонкам дронов 2026"
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+          className={inputBase}
         />
       </label>
 
@@ -38,7 +39,7 @@ export default function EventForm({
           name="event_type"
           required
           defaultValue={event?.event_type ?? ""}
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+          className={inputBase}
         >
           <option value="" disabled>
             — выбери тип —
@@ -59,7 +60,7 @@ export default function EventForm({
             type="date"
             required
             defaultValue={event?.start_date ?? ""}
-            className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+            className={inputBase}
           />
         </label>
         <label className="flex flex-col gap-1 text-sm text-gray-700">
@@ -68,7 +69,7 @@ export default function EventForm({
             name="end_date"
             type="date"
             defaultValue={event?.end_date ?? ""}
-            className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+            className={inputBase}
           />
         </label>
       </div>
@@ -81,7 +82,7 @@ export default function EventForm({
           maxLength={MAX_TITLE_LEN}
           defaultValue={event?.location ?? ""}
           placeholder="Город, адрес или площадка"
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+          className={inputBase}
         />
       </label>
 
@@ -93,21 +94,15 @@ export default function EventForm({
           maxLength={MAX_TEXT_LEN}
           defaultValue={event?.description ?? ""}
           placeholder="Короткое описание мероприятия (необязательно)"
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+          className={inputBase}
         />
       </label>
 
       <div className="flex items-center gap-3">
-        <button
-          type="submit"
-          className="rounded-md bg-gray-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-gray-700"
-        >
+        <button type="submit" className={btnPrimary}>
           {submitLabel}
         </button>
-        <Link
-          href={cancelHref}
-          className="rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-        >
+        <Link href={cancelHref} className={btnSecondary}>
           Отмена
         </Link>
       </div>

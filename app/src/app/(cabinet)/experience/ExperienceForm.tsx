@@ -5,6 +5,7 @@ import {
   type ExperienceNoteRow,
 } from "@/lib/experience";
 import { MAX_TEXT_LEN, MAX_TITLE_LEN } from "@/lib/validation";
+import { btnPrimary, btnSecondary, inputBase } from "@/components/ui";
 
 // Минимум данных мероприятия для выпадашки привязки.
 export type EventOption = { id: string; title: string };
@@ -42,7 +43,7 @@ export default function ExperienceForm({
           maxLength={MAX_TITLE_LEN}
           defaultValue={note?.title ?? ""}
           placeholder="Коротко: о чём вывод"
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+          className={inputBase}
         />
       </label>
 
@@ -52,7 +53,7 @@ export default function ExperienceForm({
           <select
             name="kind"
             defaultValue={note?.kind ?? "positive"}
-            className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+            className={inputBase}
           >
             {EXPERIENCE_KINDS.map((k) => (
               <option key={k.code} value={k.code}>
@@ -66,7 +67,7 @@ export default function ExperienceForm({
           <select
             name="category"
             defaultValue={note?.category ?? "organization"}
-            className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+            className={inputBase}
           >
             {EXPERIENCE_CATEGORIES.map((c) => (
               <option key={c.code} value={c.code}>
@@ -82,7 +83,7 @@ export default function ExperienceForm({
         <select
           name="event_id"
           defaultValue={selectedEvent}
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+          className={inputBase}
         >
           <option value="">— без мероприятия —</option>
           {events.map((e) => (
@@ -101,21 +102,15 @@ export default function ExperienceForm({
           maxLength={MAX_TEXT_LEN}
           defaultValue={note?.description ?? ""}
           placeholder="Что именно произошло и какой вывод на будущее"
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+          className={inputBase}
         />
       </label>
 
       <div className="flex items-center gap-3">
-        <button
-          type="submit"
-          className="rounded-md bg-gray-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-gray-700"
-        >
+        <button type="submit" className={btnPrimary}>
           {submitLabel}
         </button>
-        <Link
-          href={cancelHref}
-          className="rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-        >
+        <Link href={cancelHref} className={btnSecondary}>
           Отмена
         </Link>
       </div>

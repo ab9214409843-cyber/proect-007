@@ -7,8 +7,9 @@ import {
   documentTypeLabel,
   formatFileSize,
 } from "@/lib/documents";
-import { downloadDocument } from "../actions";
-import DeleteDocumentButton from "./DeleteDocumentButton";
+import { deleteDocument, downloadDocument } from "../actions";
+import ConfirmDeleteButton from "@/components/ConfirmDeleteButton";
+import { badgeBase, btnPrimary, btnSecondary } from "@/components/ui";
 
 // Карточка документа. В Next.js 16 params — асинхронные.
 export default async function DocumentPage({
@@ -41,12 +42,7 @@ export default async function DocumentPage({
 
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <h1 className="text-2xl font-semibold text-gray-900">{doc.title}</h1>
-        <span
-          className={
-            "rounded-full px-3 py-1 text-xs font-medium " +
-            documentTypeBadgeClass(doc.type)
-          }
-        >
+        <span className={badgeBase + " " + documentTypeBadgeClass(doc.type)}>
           {documentTypeLabel(doc.type)}
         </span>
       </div>
@@ -92,22 +88,21 @@ export default async function DocumentPage({
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
         <form action={downloadDocument}>
           <input type="hidden" name="id" value={doc.id} />
-          <button
-            type="submit"
-            className="rounded-md bg-gray-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-gray-700"
-          >
+          <button type="submit" className={btnPrimary}>
             Скачать
           </button>
         </form>
 
         <div className="flex items-center gap-3">
-          <Link
-            href={`/documents/${doc.id}/edit`}
-            className="rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-          >
+          <Link href={`/documents/${doc.id}/edit`} className={btnSecondary}>
             Редактировать
           </Link>
-          <DeleteDocumentButton id={doc.id} />
+          <ConfirmDeleteButton
+            action={deleteDocument}
+            id={doc.id}
+            title="Удалить документ?"
+            message="Файл будет удалён безвозвратно."
+          />
         </div>
       </div>
     </div>

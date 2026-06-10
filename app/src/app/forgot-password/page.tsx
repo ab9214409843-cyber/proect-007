@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { requestPasswordReset } from "./actions";
+import { btnPrimary, inputBase } from "@/components/ui";
 
 // Запрос ссылки для сброса пароля. По образцу страницы входа.
 export default async function ForgotPasswordPage({
@@ -33,13 +34,10 @@ export default async function ForgotPasswordPage({
               type="email"
               required
               autoComplete="email"
-              className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+              className={inputBase}
             />
           </label>
-          <button
-            formAction={requestPasswordReset}
-            className="mt-2 rounded-md bg-gray-900 px-4 py-2 text-white transition hover:bg-gray-700"
-          >
+          <button formAction={requestPasswordReset} className={btnPrimary + " mt-2"}>
             Отправить ссылку
           </button>
         </form>

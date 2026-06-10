@@ -1,4 +1,5 @@
 import { updatePassword } from "./actions";
+import { btnPrimary, inputBase } from "@/components/ui";
 
 // Установка нового пароля. Открывается по ссылке из письма (сессия восстановления
 // уже установлена). По образцу страницы регистрации.
@@ -34,13 +35,10 @@ export default async function ResetPasswordPage({
               required
               minLength={8}
               autoComplete="new-password"
-              className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+              className={inputBase}
             />
           </label>
-          <button
-            formAction={updatePassword}
-            className="mt-2 rounded-md bg-gray-900 px-4 py-2 text-white transition hover:bg-gray-700"
-          >
+          <button formAction={updatePassword} className={btnPrimary + " mt-2"}>
             Сохранить пароль
           </button>
         </form>

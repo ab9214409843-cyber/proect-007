@@ -2,22 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { navItems } from "./nav-items";
 
-const items = [
-  { href: "/dashboard", label: "Обзор" },
-  { href: "/events", label: "Мероприятия" },
-  { href: "/tasks", label: "Задачи" },
-  { href: "/documents", label: "Документы" },
-  { href: "/experience", label: "База опыта" },
-];
-
-// Боковое меню кабинета с подсветкой активного раздела.
+// Боковое меню кабинета с подсветкой активного раздела (сайдбар на ≥sm).
 export default function Nav() {
   const pathname = usePathname();
 
   return (
     <nav className="flex flex-col gap-1">
-      {items.map((item) => {
+      {navItems.map((item) => {
         const active =
           pathname === item.href || pathname.startsWith(item.href + "/");
         return (

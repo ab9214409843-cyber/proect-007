@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { TASK_PRIORITIES, TASK_STATUSES, type TaskRow } from "@/lib/tasks";
 import { MAX_TEXT_LEN, MAX_TITLE_LEN } from "@/lib/validation";
+import { btnPrimary, btnSecondary, inputBase } from "@/components/ui";
 
 // Минимум данных мероприятия для выпадашки привязки.
 export type EventOption = { id: string; title: string };
@@ -37,7 +38,7 @@ export default function TaskForm({
           maxLength={MAX_TITLE_LEN}
           defaultValue={task?.title ?? ""}
           placeholder="Например: Заказать застройку площадки"
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+          className={inputBase}
         />
       </label>
 
@@ -49,7 +50,7 @@ export default function TaskForm({
           maxLength={MAX_TEXT_LEN}
           defaultValue={task?.description ?? ""}
           placeholder="Подробности задачи (необязательно)"
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+          className={inputBase}
         />
       </label>
 
@@ -60,7 +61,7 @@ export default function TaskForm({
             name="due_date"
             type="date"
             defaultValue={task?.due_date ?? ""}
-            className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+            className={inputBase}
           />
         </label>
         <label className="flex flex-col gap-1 text-sm text-gray-700">
@@ -68,7 +69,7 @@ export default function TaskForm({
           <select
             name="priority"
             defaultValue={task?.priority ?? "medium"}
-            className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+            className={inputBase}
           >
             {TASK_PRIORITIES.map((p) => (
               <option key={p.code} value={p.code}>
@@ -85,7 +86,7 @@ export default function TaskForm({
           <select
             name="status"
             defaultValue={task?.status ?? "todo"}
-            className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+            className={inputBase}
           >
             {TASK_STATUSES.map((s) => (
               <option key={s.code} value={s.code}>
@@ -99,7 +100,7 @@ export default function TaskForm({
           <select
             name="event_id"
             defaultValue={selectedEvent}
-            className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+            className={inputBase}
           >
             <option value="">— без мероприятия —</option>
             {events.map((e) => (
@@ -112,16 +113,10 @@ export default function TaskForm({
       </div>
 
       <div className="flex items-center gap-3">
-        <button
-          type="submit"
-          className="rounded-md bg-gray-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-gray-700"
-        >
+        <button type="submit" className={btnPrimary}>
           {submitLabel}
         </button>
-        <Link
-          href={cancelHref}
-          className="rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-        >
+        <Link href={cancelHref} className={btnSecondary}>
           Отмена
         </Link>
       </div>

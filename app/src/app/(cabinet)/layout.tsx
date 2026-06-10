@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "./actions";
 import Nav from "./nav";
+import MobileNav from "./MobileNav";
+import { btnSecondary } from "@/components/ui";
 
 // Общий каркас личного кабинета: боковое меню + шапка с email и выходом.
 // Авторизацию также проверяет proxy.ts — здесь подстраховка и получение email.
@@ -34,18 +36,14 @@ export default async function CabinetLayout({
       {/* Основная часть */}
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Шапка */}
-        <header className="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-3">
-          {/* Меню для узких экранов */}
-          <div className="sm:hidden">
-            <Nav />
-          </div>
+        <header className="relative flex items-center gap-4 border-b border-gray-200 bg-white px-6 py-3">
+          {/* Меню-гамбургер для узких экранов */}
+          <MobileNav />
           <span className="hidden text-sm text-gray-500 sm:inline">
             {user.email}
           </span>
-          <form action={signOut} className="ml-auto sm:ml-0">
-            <button className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition hover:bg-gray-100">
-              Выйти
-            </button>
+          <form action={signOut} className="ml-auto">
+            <button className={btnSecondary}>Выйти</button>
           </form>
         </header>
 

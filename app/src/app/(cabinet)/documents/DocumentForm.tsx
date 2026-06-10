@@ -5,6 +5,7 @@ import {
   type DocumentRow,
 } from "@/lib/documents";
 import { MAX_TITLE_LEN } from "@/lib/validation";
+import { btnPrimary, btnSecondary, inputBase } from "@/components/ui";
 
 // Минимум данных мероприятия для выпадашки привязки.
 export type EventOption = { id: string; title: string };
@@ -52,7 +53,10 @@ export default function DocumentForm({
             name="file"
             type="file"
             required
-            className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 file:mr-3 file:rounded file:border-0 file:bg-gray-900 file:px-3 file:py-1 file:text-sm file:text-white hover:file:bg-gray-700 focus:border-gray-900 focus:outline-none"
+            className={
+              inputBase +
+              " file:mr-3 file:rounded file:border-0 file:bg-gray-900 file:px-3 file:py-1 file:text-sm file:text-white hover:file:bg-gray-700"
+            }
           />
           <span className="text-xs text-gray-500">Любой файл до 25 МБ.</span>
         </label>
@@ -66,7 +70,7 @@ export default function DocumentForm({
           maxLength={MAX_TITLE_LEN}
           defaultValue={document?.title ?? ""}
           placeholder={isEdit ? "" : "Если пусто — возьмём имя файла"}
-          className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+          className={inputBase}
         />
       </label>
 
@@ -76,7 +80,7 @@ export default function DocumentForm({
           <select
             name="type"
             defaultValue={document?.type ?? "other"}
-            className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+            className={inputBase}
           >
             {DOCUMENT_TYPES.map((t) => (
               <option key={t.code} value={t.code}>
@@ -90,7 +94,7 @@ export default function DocumentForm({
           <select
             name="event_id"
             defaultValue={selectedEvent}
-            className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+            className={inputBase}
           >
             <option value="">— без мероприятия —</option>
             {events.map((e) => (
@@ -103,16 +107,10 @@ export default function DocumentForm({
       </div>
 
       <div className="flex items-center gap-3">
-        <button
-          type="submit"
-          className="rounded-md bg-gray-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-gray-700"
-        >
+        <button type="submit" className={btnPrimary}>
           {submitLabel}
         </button>
-        <Link
-          href={cancelHref}
-          className="rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-        >
+        <Link href={cancelHref} className={btnSecondary}>
           Отмена
         </Link>
       </div>

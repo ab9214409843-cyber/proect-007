@@ -8,7 +8,9 @@ import {
   kindBadgeClass,
   kindLabel,
 } from "@/lib/experience";
-import DeleteNoteButton from "./DeleteNoteButton";
+import { deleteNote } from "../actions";
+import ConfirmDeleteButton from "@/components/ConfirmDeleteButton";
+import { badgeBase, btnSecondary } from "@/components/ui";
 
 // Карточка заметки опыта. В Next.js 16 params — асинхронные.
 export default async function NotePage({
@@ -41,20 +43,11 @@ export default async function NotePage({
 
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <h1 className="text-2xl font-semibold text-gray-900">{note.title}</h1>
-        <span
-          className={
-            "rounded-full px-3 py-1 text-xs font-medium " + kindBadgeClass(note.kind)
-          }
-        >
+        <span className={badgeBase + " " + kindBadgeClass(note.kind)}>
           {kindLabel(note.kind)}
         </span>
         {note.category && (
-          <span
-            className={
-              "rounded-full px-3 py-1 text-xs font-medium " +
-              categoryBadgeClass(note.category)
-            }
-          >
+          <span className={badgeBase + " " + categoryBadgeClass(note.category)}>
             {categoryLabel(note.category)}
           </span>
         )}
@@ -96,13 +89,15 @@ export default async function NotePage({
 
       {/* Действия */}
       <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
-        <Link
-          href={`/experience/${note.id}/edit`}
-          className="rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-        >
+        <Link href={`/experience/${note.id}/edit`} className={btnSecondary}>
           Редактировать
         </Link>
-        <DeleteNoteButton id={note.id} />
+        <ConfirmDeleteButton
+          action={deleteNote}
+          id={note.id}
+          title="Удалить заметку?"
+          message="Это действие необратимо."
+        />
       </div>
     </div>
   );

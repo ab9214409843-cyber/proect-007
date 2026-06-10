@@ -25,9 +25,11 @@ import {
   kindBadgeClass,
   kindLabel,
 } from "@/lib/experience";
-import { updateEventStatus } from "../actions";
+import { deleteEvent, updateEventStatus } from "../actions";
 import { downloadDocument } from "../../documents/actions";
-import DeleteEventButton from "./DeleteEventButton";
+import ConfirmDeleteButton from "@/components/ConfirmDeleteButton";
+import EmptyState from "@/components/EmptyState";
+import { badgeBase, btnSecondary, inputBase, rowCard } from "@/components/ui";
 
 // Карточка мероприятия. В Next.js 16 params — асинхронные.
 export default async function EventPage({
@@ -81,12 +83,7 @@ export default async function EventPage({
 
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <h1 className="text-2xl font-semibold text-gray-900">{event.title}</h1>
-        <span
-          className={
-            "rounded-full px-3 py-1 text-xs font-medium " +
-            statusBadgeClass(event.status)
-          }
-        >
+        <span className={badgeBase + " " + statusBadgeClass(event.status)}>
           {statusLabel(event.status)}
         </span>
       </div>
@@ -130,7 +127,7 @@ export default async function EventPage({
             <select
               name="status"
               defaultValue={event.status}
-              className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+              className={inputBase}
             >
               {EVENT_STATUSES.map((s) => (
                 <option key={s.code} value={s.code}>
@@ -139,22 +136,21 @@ export default async function EventPage({
               ))}
             </select>
           </label>
-          <button
-            type="submit"
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-          >
+          <button type="submit" className={btnSecondary}>
             Обновить
           </button>
         </form>
 
         <div className="flex items-center gap-3">
-          <Link
-            href={`/events/${event.id}/edit`}
-            className="rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-          >
+          <Link href={`/events/${event.id}/edit`} className={btnSecondary}>
             Редактировать
           </Link>
-          <DeleteEventButton id={event.id} />
+          <ConfirmDeleteButton
+            action={deleteEvent}
+            id={event.id}
+            title="Удалить мероприятие?"
+            message="Связанные задачи, документы и заметки тоже удалятся. Это действие необратимо."
+          />
         </div>
       </div>
 
@@ -162,20 +158,14 @@ export default async function EventPage({
       <section className="mt-10">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900">План задач</h2>
-          <Link
-            href={`/tasks/new?event=${event.id}`}
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-          >
+          <Link href={`/tasks/new?event=${event.id}`} className={btnSecondary}>
             + Добавить задачу
           </Link>
         </div>
         {tasks && tasks.length > 0 ? (
           <ul className="mt-4 flex flex-col gap-2">
             {tasks.map((task) => (
-              <li
-                key={task.id}
-                className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
-              >
+              <li key={task.id} className={rowCard}>
                 <Link href={`/tasks/${task.id}`} className="min-w-0 flex-1">
                   <p className="font-medium text-gray-900 hover:underline">
                     {task.title}
@@ -187,7 +177,7 @@ export default async function EventPage({
                 <div className="flex shrink-0 items-center gap-2">
                   <span
                     className={
-                      "rounded-full px-2.5 py-1 text-xs font-medium " +
+                      badgeBase + " " +
                       taskPriorityBadgeClass(task.priority)
                     }
                   >
@@ -195,7 +185,7 @@ export default async function EventPage({
                   </span>
                   <span
                     className={
-                      "rounded-full px-2.5 py-1 text-xs font-medium " +
+                      badgeBase + " " +
                       taskStatusBadgeClass(task.status)
                     }
                   >
@@ -206,12 +196,11 @@ export default async function EventPage({
             ))}
           </ul>
         ) : (
-          <div className="mt-4 rounded-lg border border-dashed border-gray-300 bg-white p-8 text-center">
-            <p className="text-gray-700">Пока нет задач.</p>
-            <p className="mt-1 text-sm text-gray-500">
-              План задач создаётся автоматически при создании мероприятия с типом и датой.
-            </p>
-          </div>
+          <EmptyState
+            className="mt-4"
+            title="Пока нет задач."
+            hint="План задач создаётся автоматически при создании мероприятия с типом и датой."
+          />
         )}
       </section>
 
@@ -219,20 +208,14 @@ export default async function EventPage({
       <section className="mt-10">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900">Документы</h2>
-          <Link
-            href={`/documents/new?event=${event.id}`}
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-          >
+          <Link href={`/documents/new?event=${event.id}`} className={btnSecondary}>
             + Добавить документ
           </Link>
         </div>
         {documents && documents.length > 0 ? (
           <ul className="mt-4 flex flex-col gap-2">
             {documents.map((doc) => (
-              <li
-                key={doc.id}
-                className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
-              >
+              <li key={doc.id} className={rowCard}>
                 <Link href={`/documents/${doc.id}`} className="min-w-0 flex-1">
                   <p className="truncate font-medium text-gray-900 hover:underline">
                     {doc.title}
@@ -244,7 +227,7 @@ export default async function EventPage({
                 <div className="flex shrink-0 items-center gap-2">
                   <span
                     className={
-                      "rounded-full px-2.5 py-1 text-xs font-medium " +
+                      badgeBase + " " +
                       documentTypeBadgeClass(doc.type)
                     }
                   >
@@ -252,10 +235,7 @@ export default async function EventPage({
                   </span>
                   <form action={downloadDocument}>
                     <input type="hidden" name="id" value={doc.id} />
-                    <button
-                      type="submit"
-                      className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-                    >
+                    <button type="submit" className={btnSecondary + " py-1.5"}>
                       Скачать
                     </button>
                   </form>
@@ -264,12 +244,11 @@ export default async function EventPage({
             ))}
           </ul>
         ) : (
-          <div className="mt-4 rounded-lg border border-dashed border-gray-300 bg-white p-8 text-center">
-            <p className="text-gray-700">Пока нет документов.</p>
-            <p className="mt-1 text-sm text-gray-500">
-              Нажми «+ Добавить документ», чтобы загрузить первый файл.
-            </p>
-          </div>
+          <EmptyState
+            className="mt-4"
+            title="Пока нет документов."
+            hint="Нажми «+ Добавить документ», чтобы загрузить первый файл."
+          />
         )}
       </section>
 
@@ -277,20 +256,14 @@ export default async function EventPage({
       <section className="mt-10">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900">Заметки опыта</h2>
-          <Link
-            href={`/experience/new?event=${event.id}`}
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-          >
+          <Link href={`/experience/new?event=${event.id}`} className={btnSecondary}>
             + Добавить заметку
           </Link>
         </div>
         {notes && notes.length > 0 ? (
           <ul className="mt-4 flex flex-col gap-2">
             {notes.map((note) => (
-              <li
-                key={note.id}
-                className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
-              >
+              <li key={note.id} className={rowCard}>
                 <Link href={`/experience/${note.id}`} className="min-w-0 flex-1">
                   <p className="truncate font-medium text-gray-900 hover:underline">
                     {note.title}
@@ -299,7 +272,7 @@ export default async function EventPage({
                 <div className="flex shrink-0 items-center gap-2">
                   <span
                     className={
-                      "rounded-full px-2.5 py-1 text-xs font-medium " +
+                      badgeBase + " " +
                       kindBadgeClass(note.kind)
                     }
                   >
@@ -320,12 +293,11 @@ export default async function EventPage({
             ))}
           </ul>
         ) : (
-          <div className="mt-4 rounded-lg border border-dashed border-gray-300 bg-white p-8 text-center">
-            <p className="text-gray-700">Пока нет заметок.</p>
-            <p className="mt-1 text-sm text-gray-500">
-              После мероприятия запиши выводы — нажми «+ Добавить заметку».
-            </p>
-          </div>
+          <EmptyState
+            className="mt-4"
+            title="Пока нет заметок."
+            hint="После мероприятия запиши выводы — нажми «+ Добавить заметку»."
+          />
         )}
       </section>
     </div>

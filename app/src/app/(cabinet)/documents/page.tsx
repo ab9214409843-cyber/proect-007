@@ -8,6 +8,18 @@ import {
   formatFileSize,
 } from "@/lib/documents";
 import { downloadDocument } from "./actions";
+import PageHeader from "@/components/PageHeader";
+import EmptyState from "@/components/EmptyState";
+import {
+  badgeBase,
+  btnPrimary,
+  btnSecondary,
+  chipActive,
+  chipBase,
+  chipInactive,
+  inputBase,
+  rowCard,
+} from "@/components/ui";
 
 // Список всех документов пользователя (RLS отдаёт только свои) с фильтрами по типу и мероприятию.
 // Фильтры — через searchParams (type, event); Next.js 16: searchParams асинхронные.
@@ -47,33 +59,24 @@ export default async function DocumentsPage({
   };
 
   const chip = (active: boolean) =>
-    "rounded-full px-3 py-1 text-sm font-medium transition " +
-    (active
-      ? "bg-gray-900 text-white"
-      : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-100");
+    chipBase + " " + (active ? chipActive : chipInactive);
 
   return (
     <div className="mx-auto max-w-4xl">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-gray-900">Документы</h1>
-        <div className="flex items-center gap-3">
-          <Link
-            href="/documents/templates"
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-          >
-            Шаблоны
-          </Link>
-          <Link
-            href="/documents/new"
-            className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-700"
-          >
-            Загрузить
-          </Link>
-        </div>
-      </div>
-      <p className="mt-2 text-gray-600">
-        Положение, смета, приказ, сценарий и другие файлы — рядом с мероприятием.
-      </p>
+      <PageHeader
+        title="Документы"
+        description="Положение, смета, приказ, сценарий и другие файлы — рядом с мероприятием."
+        action={
+          <div className="flex items-center gap-3">
+            <Link href="/documents/templates" className={btnSecondary}>
+              Шаблоны
+            </Link>
+            <Link href="/documents/new" className={btnPrimary}>
+              Загрузить
+            </Link>
+          </div>
+        }
+      />
 
       {/* Фильтры */}
       <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -98,7 +101,7 @@ export default async function DocumentsPage({
             <select
               name="event"
               defaultValue={event ?? ""}
-              className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-900 focus:border-gray-900 focus:outline-none"
+              className={inputBase + " py-1.5 text-sm"}
             >
               <option value="">Все мероприятия</option>
               {events.map((e) => (
@@ -107,10 +110,7 @@ export default async function DocumentsPage({
                 </option>
               ))}
             </select>
-            <button
-              type="submit"
-              className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-            >
+            <button type="submit" className={btnSecondary + " py-1.5"}>
               Применить
             </button>
           </form>
@@ -118,23 +118,22 @@ export default async function DocumentsPage({
       </div>
 
       {documents.length === 0 ? (
-        <div className="mt-8 rounded-lg border border-dashed border-gray-300 bg-white p-10 text-center">
-          <p className="text-gray-700">
-            {activeType || event ? "Под фильтры ничего не подходит." : "Пока нет документов."}
-          </p>
-          <p className="mt-1 text-sm text-gray-500">
-            {activeType || event
+        <EmptyState
+          title={
+            activeType || event
+              ? "Под фильтры ничего не подходит."
+              : "Пока нет документов."
+          }
+          hint={
+            activeType || event
               ? "Измени фильтры или загрузи новый документ."
-              : "Нажми «Загрузить», чтобы добавить первый файл."}
-          </p>
-        </div>
+              : "Нажми «Загрузить», чтобы добавить первый файл."
+          }
+        />
       ) : (
         <ul className="mt-8 flex flex-col gap-2">
           {documents.map((doc) => (
-            <li
-              key={doc.id}
-              className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
-            >
+            <li key={doc.id} className={rowCard}>
               <Link href={`/documents/${doc.id}`} className="min-w-0 flex-1">
                 <p className="truncate font-medium text-gray-900 hover:underline">
                   {doc.title}
@@ -146,20 +145,12 @@ export default async function DocumentsPage({
                 </p>
               </Link>
               <div className="flex shrink-0 items-center gap-2">
-                <span
-                  className={
-                    "rounded-full px-2.5 py-1 text-xs font-medium " +
-                    documentTypeBadgeClass(doc.type)
-                  }
-                >
+                <span className={badgeBase + " " + documentTypeBadgeClass(doc.type)}>
                   {documentTypeLabel(doc.type)}
                 </span>
                 <form action={downloadDocument}>
                   <input type="hidden" name="id" value={doc.id} />
-                  <button
-                    type="submit"
-                    className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-                  >
+                  <button type="submit" className={btnSecondary + " py-1.5"}>
                     Скачать
                   </button>
                 </form>

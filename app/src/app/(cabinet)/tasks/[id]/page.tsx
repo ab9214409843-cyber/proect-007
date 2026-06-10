@@ -9,8 +9,9 @@ import {
   taskStatusBadgeClass,
   taskStatusLabel,
 } from "@/lib/tasks";
-import { updateTaskStatus } from "../actions";
-import DeleteTaskButton from "./DeleteTaskButton";
+import { deleteTask, updateTaskStatus } from "../actions";
+import ConfirmDeleteButton from "@/components/ConfirmDeleteButton";
+import { badgeBase, btnSecondary, inputBase } from "@/components/ui";
 
 // Карточка задачи. В Next.js 16 params — асинхронные.
 export default async function TaskPage({
@@ -43,20 +44,10 @@ export default async function TaskPage({
 
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <h1 className="text-2xl font-semibold text-gray-900">{task.title}</h1>
-        <span
-          className={
-            "rounded-full px-3 py-1 text-xs font-medium " +
-            taskPriorityBadgeClass(task.priority)
-          }
-        >
+        <span className={badgeBase + " " + taskPriorityBadgeClass(task.priority)}>
           {taskPriorityLabel(task.priority)}
         </span>
-        <span
-          className={
-            "rounded-full px-3 py-1 text-xs font-medium " +
-            taskStatusBadgeClass(task.status)
-          }
-        >
+        <span className={badgeBase + " " + taskStatusBadgeClass(task.status)}>
           {taskStatusLabel(task.status)}
         </span>
       </div>
@@ -109,7 +100,7 @@ export default async function TaskPage({
             <select
               name="status"
               defaultValue={task.status}
-              className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
+              className={inputBase}
             >
               {TASK_STATUSES.map((s) => (
                 <option key={s.code} value={s.code}>
@@ -118,22 +109,21 @@ export default async function TaskPage({
               ))}
             </select>
           </label>
-          <button
-            type="submit"
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-          >
+          <button type="submit" className={btnSecondary}>
             Обновить
           </button>
         </form>
 
         <div className="flex items-center gap-3">
-          <Link
-            href={`/tasks/${task.id}/edit`}
-            className="rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-          >
+          <Link href={`/tasks/${task.id}/edit`} className={btnSecondary}>
             Редактировать
           </Link>
-          <DeleteTaskButton id={task.id} />
+          <ConfirmDeleteButton
+            action={deleteTask}
+            id={task.id}
+            title="Удалить задачу?"
+            message="Это действие необратимо."
+          />
         </div>
       </div>
     </div>
