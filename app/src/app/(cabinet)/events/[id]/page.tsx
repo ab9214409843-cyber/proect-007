@@ -32,10 +32,13 @@ import DeleteEventButton from "./DeleteEventButton";
 // Карточка мероприятия. В Next.js 16 params — асинхронные.
 export default async function EventPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ error?: string }>;
 }) {
   const { id } = await params;
+  const { error } = await searchParams;
 
   const supabase = await createClient();
   const { data: event } = await supabase
@@ -87,6 +90,10 @@ export default async function EventPage({
           {statusLabel(event.status)}
         </span>
       </div>
+
+      {error && (
+        <p className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>
+      )}
 
       {/* Основные поля */}
       <dl className="mt-8 grid gap-4 sm:grid-cols-2">

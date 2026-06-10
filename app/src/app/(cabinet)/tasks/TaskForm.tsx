@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TASK_PRIORITIES, TASK_STATUSES, type TaskRow } from "@/lib/tasks";
+import { MAX_TEXT_LEN, MAX_TITLE_LEN } from "@/lib/validation";
 
 // Минимум данных мероприятия для выпадашки привязки.
 export type EventOption = { id: string; title: string };
@@ -33,6 +34,7 @@ export default function TaskForm({
           name="title"
           type="text"
           required
+          maxLength={MAX_TITLE_LEN}
           defaultValue={task?.title ?? ""}
           placeholder="Например: Заказать застройку площадки"
           className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
@@ -44,6 +46,7 @@ export default function TaskForm({
         <textarea
           name="description"
           rows={4}
+          maxLength={MAX_TEXT_LEN}
           defaultValue={task?.description ?? ""}
           placeholder="Подробности задачи (необязательно)"
           className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"

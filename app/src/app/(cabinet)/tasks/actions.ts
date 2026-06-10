@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { TASK_PRIORITIES, TASK_STATUSES } from "@/lib/tasks";
+import { MAX_TEXT_LEN, MAX_TITLE_LEN } from "@/lib/validation";
 
 // Пустую строку из формы превращаем в null (для необязательных полей БД).
 function emptyToNull(value: FormDataEntryValue | null): string | null {
@@ -27,6 +28,19 @@ function readTaskFields(formData: FormData) {
   };
 }
 
+// Проверка длины текстовых полей. Возвращает сообщение или null.
+function validateTaskFields(
+  fields: ReturnType<typeof readTaskFields>,
+): string | null {
+  if (fields.title.length > MAX_TITLE_LEN) {
+    return `Название слишком длинное (до ${MAX_TITLE_LEN} символов).`;
+  }
+  if (fields.description && fields.description.length > MAX_TEXT_LEN) {
+    return `Описание слишком длинное (до ${MAX_TEXT_LEN} символов).`;
+  }
+  return null;
+}
+
 // Создание задачи вручную. Привязка к мероприятию — необязательна.
 export async function createTask(formData: FormData) {
   const fields = readTaskFields(formData);
@@ -34,6 +48,8 @@ export async function createTask(formData: FormData) {
   if (!fields.title) {
     redirect(`/tasks/new?error=${encodeURIComponent("Укажи название задачи.")}${eventParam}`);
   }
+  const invalid = validateTaskFields(fields);
+  if (invalid) redirect(`/tasks/new?error=${encodeURIComponent(invalid)}${eventParam}`);
 
   const supabase = await createClient();
   const {
@@ -66,6 +82,8 @@ export async function updateTask(formData: FormData) {
   if (!fields.title) {
     redirect(`/tasks/${id}/edit?error=${encodeURIComponent("Укажи название задачи.")}`);
   }
+  const invalid = validateTaskFields(fields);
+  if (invalid) redirect(`/tasks/${id}/edit?error=${encodeURIComponent(invalid)}`);
 
   const supabase = await createClient();
   const { error } = await supabase.from("tasks").update(fields).eq("id", id);
@@ -90,12 +108,20 @@ export async function updateTaskStatus(formData: FormData) {
   if (!id || !allowed) redirect(id ? `/tasks/${id}` : "/tasks");
 
   const supabase = await createClient();
-  await supabase.from("tasks").update({ status }).eq("id", id);
+  const { error } = await supabase.from("tasks").update({ status }).eq("id", id);
+
+  // redirectTo принимаем только как локальный путь (защита от open redirect).
+  const target =
+    redirectTo && redirectTo.startsWith("/") ? redirectTo : `/tasks/${id}`;
+
+  if (error) {
+    const sep = target.includes("?") ? "&" : "?";
+    redirect(`${target}${sep}error=${encodeURIComponent("Не удалось изменить статус. Попробуй ещё раз.")}`);
+  }
 
   revalidatePath("/tasks");
   revalidatePath(`/tasks/${id}`);
-  // redirectTo принимаем только как локальный путь (защита от open redirect).
-  redirect(redirectTo && redirectTo.startsWith("/") ? redirectTo : `/tasks/${id}`);
+  redirect(target);
 }
 
 // Удаление задачи. RLS защищает чужие записи.
@@ -104,7 +130,11 @@ export async function deleteTask(formData: FormData) {
   if (!id) redirect("/tasks");
 
   const supabase = await createClient();
-  await supabase.from("tasks").delete().eq("id", id);
+  const { error } = await supabase.from("tasks").delete().eq("id", id);
+
+  if (error) {
+    redirect(`/tasks/${id}?error=${encodeURIComponent("Не удалось удалить задачу. Попробуй ещё раз.")}`);
+  }
 
   revalidatePath("/tasks");
   redirect("/tasks");

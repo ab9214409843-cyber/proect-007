@@ -8,6 +8,7 @@ import {
   DOCUMENT_TYPES,
   MAX_FILE_BYTES,
 } from "@/lib/documents";
+import { MAX_TITLE_LEN } from "@/lib/validation";
 
 // Пустую строку из формы превращаем в null (для необязательных полей БД).
 function emptyToNull(value: FormDataEntryValue | null): string | null {
@@ -47,6 +48,10 @@ export async function createDocument(formData: FormData) {
   }
   if (file.size > MAX_FILE_BYTES) {
     fail("Файл больше 25 МБ. Выбери файл поменьше.");
+    return;
+  }
+  if (meta.title && meta.title.length > MAX_TITLE_LEN) {
+    fail(`Название слишком длинное (до ${MAX_TITLE_LEN} символов).`);
     return;
   }
 
@@ -102,6 +107,11 @@ export async function updateDocument(formData: FormData) {
   if (!id) redirect("/documents");
   if (!meta.title) {
     redirect(`/documents/${id}/edit?error=${encodeURIComponent("Укажи название документа.")}`);
+  }
+  if (meta.title.length > MAX_TITLE_LEN) {
+    redirect(
+      `/documents/${id}/edit?error=${encodeURIComponent(`Название слишком длинное (до ${MAX_TITLE_LEN} символов).`)}`,
+    );
   }
 
   const supabase = await createClient();
@@ -163,7 +173,11 @@ export async function deleteDocument(formData: FormData) {
   if (doc?.file_url) {
     await supabase.storage.from(DOCUMENTS_BUCKET).remove([doc.file_url]);
   }
-  await supabase.from("documents").delete().eq("id", id);
+  const { error } = await supabase.from("documents").delete().eq("id", id);
+
+  if (error) {
+    redirect(`/documents/${id}?error=${encodeURIComponent("Не удалось удалить документ. Попробуй ещё раз.")}`);
+  }
 
   revalidatePath("/documents");
   redirect("/documents");

@@ -12,7 +12,7 @@ function describeSignupError(error: AuthError): string {
     case "email_exists":
       return "Пользователь с такой почтой уже зарегистрирован. Попробуй войти.";
     case "weak_password":
-      return "Пароль слишком простой — нужно минимум 6 символов.";
+      return "Пароль слишком простой — нужно минимум 8 символов (и не из утёкших).";
     case "email_address_invalid":
       return "Похоже, email указан неверно.";
     case "over_email_send_rate_limit":

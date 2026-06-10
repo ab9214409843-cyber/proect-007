@@ -13,9 +13,9 @@ import TaskStatusSelect from "./TaskStatusSelect";
 export default async function TasksPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; event?: string }>;
+  searchParams: Promise<{ status?: string; event?: string; error?: string }>;
 }) {
-  const { status, event } = await searchParams;
+  const { status, event, error } = await searchParams;
   const activeStatus = TASK_STATUSES.some((s) => s.code === status) ? status : undefined;
 
   const supabase = await createClient();
@@ -72,6 +72,10 @@ export default async function TasksPage({
       <p className="mt-2 text-gray-600">
         Все задачи по подготовке мероприятий в одном месте.
       </p>
+
+      {error && (
+        <p className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>
+      )}
 
       {/* Фильтры */}
       <div className="mt-6 flex flex-wrap items-center gap-3">

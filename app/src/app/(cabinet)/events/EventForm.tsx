@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { EVENT_TYPES, type EventRow } from "@/lib/events";
+import { MAX_TEXT_LEN, MAX_TITLE_LEN } from "@/lib/validation";
 
 // Общая форма создания/редактирования мероприятия.
 // action — server action (createEvent или updateEvent); event — для предзаполнения при редактировании.
@@ -24,6 +25,7 @@ export default function EventForm({
           name="title"
           type="text"
           required
+          maxLength={MAX_TITLE_LEN}
           defaultValue={event?.title ?? ""}
           placeholder="Например: Кубок по гонкам дронов 2026"
           className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
@@ -76,6 +78,7 @@ export default function EventForm({
         <input
           name="location"
           type="text"
+          maxLength={MAX_TITLE_LEN}
           defaultValue={event?.location ?? ""}
           placeholder="Город, адрес или площадка"
           className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
@@ -87,6 +90,7 @@ export default function EventForm({
         <textarea
           name="description"
           rows={4}
+          maxLength={MAX_TEXT_LEN}
           defaultValue={event?.description ?? ""}
           placeholder="Короткое описание мероприятия (необязательно)"
           className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"

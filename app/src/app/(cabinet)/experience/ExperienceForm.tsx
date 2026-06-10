@@ -4,6 +4,7 @@ import {
   EXPERIENCE_KINDS,
   type ExperienceNoteRow,
 } from "@/lib/experience";
+import { MAX_TEXT_LEN, MAX_TITLE_LEN } from "@/lib/validation";
 
 // Минимум данных мероприятия для выпадашки привязки.
 export type EventOption = { id: string; title: string };
@@ -38,6 +39,7 @@ export default function ExperienceForm({
           name="title"
           type="text"
           required
+          maxLength={MAX_TITLE_LEN}
           defaultValue={note?.title ?? ""}
           placeholder="Коротко: о чём вывод"
           className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"
@@ -96,6 +98,7 @@ export default function ExperienceForm({
         <textarea
           name="description"
           rows={5}
+          maxLength={MAX_TEXT_LEN}
           defaultValue={note?.description ?? ""}
           placeholder="Что именно произошло и какой вывод на будущее"
           className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"

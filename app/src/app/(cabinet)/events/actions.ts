@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { EVENT_STATUSES, EVENT_TYPES } from "@/lib/events";
 import { addDaysISO } from "@/lib/tasks";
+import { MAX_TEXT_LEN, MAX_TITLE_LEN } from "@/lib/validation";
 
 // Типизированный клиент Supabase (как возвращает createClient) — для вспомогательных функций.
 type DbClient = Awaited<ReturnType<typeof createClient>>;
@@ -27,6 +28,23 @@ function readEventFields(formData: FormData) {
     location: emptyToNull(formData.get("location")),
     description: emptyToNull(formData.get("description")),
   };
+}
+
+// Общие проверки полей (длина текста, порядок дат). Возвращает сообщение или null.
+// Сравнение дат строкой работает корректно для ISO-формата yyyy-mm-dd.
+function validateEventFields(
+  fields: ReturnType<typeof readEventFields>,
+): string | null {
+  if (fields.title.length > MAX_TITLE_LEN) {
+    return `Название слишком длинное (до ${MAX_TITLE_LEN} символов).`;
+  }
+  if (fields.description && fields.description.length > MAX_TEXT_LEN) {
+    return `Описание слишком длинное (до ${MAX_TEXT_LEN} символов).`;
+  }
+  if (fields.start_date && fields.end_date && fields.end_date < fields.start_date) {
+    return "Дата окончания не может быть раньше даты начала.";
+  }
+  return null;
 }
 
 // Автоплан (Этап 5): по типу и дате мероприятия разворачиваем задачи из checklist_templates.
@@ -75,6 +93,8 @@ export async function createEvent(formData: FormData) {
       `/events/new?error=${encodeURIComponent("Укажи дату начала — от неё строится план задач.")}`,
     );
   }
+  const invalid = validateEventFields(fields);
+  if (invalid) redirect(`/events/new?error=${encodeURIComponent(invalid)}`);
 
   const supabase = await createClient();
   const {
@@ -120,6 +140,8 @@ export async function updateEvent(formData: FormData) {
   if (!fields.start_date) {
     redirect(`/events/${id}/edit?error=${encodeURIComponent("Укажи дату начала.")}`);
   }
+  const invalid = validateEventFields(fields);
+  if (invalid) redirect(`/events/${id}/edit?error=${encodeURIComponent(invalid)}`);
 
   const supabase = await createClient();
   const { error } = await supabase.from("events").update(fields).eq("id", id);
@@ -141,7 +163,11 @@ export async function updateEventStatus(formData: FormData) {
   if (!id || !allowed) redirect(id ? `/events/${id}` : "/events");
 
   const supabase = await createClient();
-  await supabase.from("events").update({ status }).eq("id", id);
+  const { error } = await supabase.from("events").update({ status }).eq("id", id);
+
+  if (error) {
+    redirect(`/events/${id}?error=${encodeURIComponent("Не удалось изменить статус. Попробуй ещё раз.")}`);
+  }
 
   revalidatePath("/events");
   revalidatePath(`/events/${id}`);
@@ -154,7 +180,11 @@ export async function deleteEvent(formData: FormData) {
   if (!id) redirect("/events");
 
   const supabase = await createClient();
-  await supabase.from("events").delete().eq("id", id);
+  const { error } = await supabase.from("events").delete().eq("id", id);
+
+  if (error) {
+    redirect(`/events/${id}?error=${encodeURIComponent("Не удалось удалить мероприятие. Попробуй ещё раз.")}`);
+  }
 
   revalidatePath("/events");
   revalidatePath("/tasks");

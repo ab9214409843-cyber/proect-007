@@ -4,6 +4,7 @@ import {
   formatFileSize,
   type DocumentRow,
 } from "@/lib/documents";
+import { MAX_TITLE_LEN } from "@/lib/validation";
 
 // Минимум данных мероприятия для выпадашки привязки.
 export type EventOption = { id: string; title: string };
@@ -62,6 +63,7 @@ export default function DocumentForm({
         <input
           name="title"
           type="text"
+          maxLength={MAX_TITLE_LEN}
           defaultValue={document?.title ?? ""}
           placeholder={isEdit ? "" : "Если пусто — возьмём имя файла"}
           className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:border-gray-900 focus:outline-none"

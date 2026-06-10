@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { EXPERIENCE_CATEGORIES, EXPERIENCE_KINDS } from "@/lib/experience";
+import { MAX_TEXT_LEN, MAX_TITLE_LEN } from "@/lib/validation";
 
 // Пустую строку из формы превращаем в null (для необязательных полей БД).
 function emptyToNull(value: FormDataEntryValue | null): string | null {
@@ -25,6 +26,17 @@ function readFields(formData: FormData) {
   };
 }
 
+// Проверка длины текстовых полей. Возвращает сообщение или null.
+function validateFields(fields: ReturnType<typeof readFields>): string | null {
+  if (fields.title && fields.title.length > MAX_TITLE_LEN) {
+    return `Заголовок слишком длинный (до ${MAX_TITLE_LEN} символов).`;
+  }
+  if (fields.description && fields.description.length > MAX_TEXT_LEN) {
+    return `Текст слишком длинный (до ${MAX_TEXT_LEN} символов).`;
+  }
+  return null;
+}
+
 // Создание заметки опыта.
 export async function createNote(formData: FormData) {
   const fields = readFields(formData);
@@ -33,6 +45,11 @@ export async function createNote(formData: FormData) {
     redirect(
       `/experience/new?error=${encodeURIComponent("Укажи заголовок заметки.")}${eventParam}`,
     );
+  }
+  const invalid = validateFields(fields);
+  if (invalid) {
+    const eventParam = fields.event_id ? `&event=${fields.event_id}` : "";
+    redirect(`/experience/new?error=${encodeURIComponent(invalid)}${eventParam}`);
   }
 
   const supabase = await createClient();
@@ -67,6 +84,8 @@ export async function updateNote(formData: FormData) {
   if (!fields.title) {
     redirect(`/experience/${id}/edit?error=${encodeURIComponent("Укажи заголовок заметки.")}`);
   }
+  const invalid = validateFields(fields);
+  if (invalid) redirect(`/experience/${id}/edit?error=${encodeURIComponent(invalid)}`);
 
   const supabase = await createClient();
   const { error } = await supabase
@@ -92,7 +111,11 @@ export async function deleteNote(formData: FormData) {
   if (!id) redirect("/experience");
 
   const supabase = await createClient();
-  await supabase.from("experience_notes").delete().eq("id", id);
+  const { error } = await supabase.from("experience_notes").delete().eq("id", id);
+
+  if (error) {
+    redirect(`/experience/${id}?error=${encodeURIComponent("Не удалось удалить заметку. Попробуй ещё раз.")}`);
+  }
 
   revalidatePath("/experience");
   redirect("/experience");

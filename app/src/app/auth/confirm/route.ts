@@ -10,6 +10,13 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const tokenHash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;
+  // next — куда вести после подтверждения. Для сброса пароля = /reset-password.
+  // Принимаем только локальный путь (защита от open redirect).
+  const nextParam = searchParams.get("next");
+  const next =
+    nextParam && nextParam.startsWith("/") && !nextParam.startsWith("//")
+      ? nextParam
+      : "/dashboard";
 
   if (tokenHash && type) {
     const supabase = await createClient();
@@ -18,8 +25,8 @@ export async function GET(request: NextRequest) {
       token_hash: tokenHash,
     });
     if (!error) {
-      // Почта подтверждена, сессия установлена — в кабинет.
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      // Сессия установлена. Для recovery ведём на смену пароля, иначе — в кабинет.
+      return NextResponse.redirect(new URL(next, request.url));
     }
   }
 
