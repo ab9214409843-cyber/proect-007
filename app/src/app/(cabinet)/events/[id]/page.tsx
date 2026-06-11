@@ -29,7 +29,7 @@ import { deleteEvent, updateEventStatus } from "../actions";
 import { downloadDocument } from "../../documents/actions";
 import ConfirmDeleteButton from "@/components/ConfirmDeleteButton";
 import EmptyState from "@/components/EmptyState";
-import { badgeBase, btnSecondary, inputBase, rowCard } from "@/components/ui";
+import { alertError, badgeBase, btnSecondary, inputBase, rowCard } from "@/components/ui";
 
 // Карточка мероприятия. В Next.js 16 params — асинхронные.
 export default async function EventPage({
@@ -88,9 +88,7 @@ export default async function EventPage({
         </span>
       </div>
 
-      {error && (
-        <p className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>
-      )}
+      {error && <p className={"mt-4 " + alertError}>{error}</p>}
 
       {/* Основные поля */}
       <dl className="mt-8 grid gap-4 sm:grid-cols-2">

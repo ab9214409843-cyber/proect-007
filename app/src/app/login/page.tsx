@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { login } from "./actions";
-import { btnPrimary, inputBase } from "@/components/ui";
+import { alertError, alertSuccess, btnPrimary, inputBase } from "@/components/ui";
 
 export default async function LoginPage({
   searchParams,
@@ -14,16 +14,8 @@ export default async function LoginPage({
       <div className="w-full max-w-sm rounded-lg border border-sand bg-card p-8 shadow-sm">
         <h1 className="mb-6 font-serif text-2xl font-semibold tracking-tight text-espresso">Вход</h1>
 
-        {info && (
-          <p className="mb-4 rounded-md bg-green-50 p-3 text-sm text-green-700">
-            {info}
-          </p>
-        )}
-        {error && (
-          <p className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
-            {error}
-          </p>
-        )}
+        {info && <p className={"mb-4 " + alertSuccess}>{info}</p>}
+        {error && <p className={"mb-4 " + alertError}>{error}</p>}
 
         <form className="flex flex-col gap-4">
           <label className="flex flex-col gap-1 text-sm text-espresso">

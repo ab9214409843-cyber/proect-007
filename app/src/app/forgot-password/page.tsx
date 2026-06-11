@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { requestPasswordReset } from "./actions";
-import { btnPrimary, inputBase } from "@/components/ui";
+import { alertError, btnPrimary, inputBase } from "@/components/ui";
 
 // Запрос ссылки для сброса пароля. По образцу страницы входа.
 export default async function ForgotPasswordPage({
@@ -20,11 +20,7 @@ export default async function ForgotPasswordPage({
           Укажи email — пришлём ссылку для смены пароля.
         </p>
 
-        {error && (
-          <p className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
-            {error}
-          </p>
-        )}
+        {error && <p className={"mb-4 " + alertError}>{error}</p>}
 
         <form className="flex flex-col gap-4">
           <label className="flex flex-col gap-1 text-sm text-espresso">

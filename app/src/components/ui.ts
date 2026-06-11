@@ -9,7 +9,7 @@ export const btnPrimary =
 export const btnSecondary =
   "rounded-full border border-sand bg-card px-5 py-2 text-sm font-medium text-espresso transition hover:bg-paper-2";
 export const btnDanger =
-  "rounded-full border border-red-200 bg-card px-5 py-2 text-sm font-medium text-red-700 transition hover:bg-red-50";
+  "rounded-full border border-danger/30 bg-card px-5 py-2 text-sm font-medium text-danger transition hover:bg-danger-bg";
 
 // Поля форм (input / select / textarea)
 export const inputBase =
@@ -24,6 +24,11 @@ export const rowCard =
 
 // Бейдж-таблетка (цвет добавляется доменным хелпером сверху)
 export const badgeBase = "rounded-full px-2.5 py-1 text-xs font-medium";
+
+// Блок-уведомление под формой/на странице — на тёплой палитре (токены danger/success).
+// Внешний отступ (mt-4 / mb-4) задаёт место вызова.
+export const alertError = "rounded-md bg-danger-bg p-3 text-sm text-danger";
+export const alertSuccess = "rounded-md bg-success-bg p-3 text-sm text-success";
 
 // Чип-фильтр
 export const chipBase = "rounded-full px-3 py-1 text-sm font-medium transition";

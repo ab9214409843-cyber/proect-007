@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createEvent } from "../actions";
 import EventForm from "../EventForm";
+import { alertError } from "@/components/ui";
 
 // Страница создания мероприятия. Ошибки приходят через ?error= (паттерн как в register).
 export default async function NewEventPage({
@@ -23,11 +24,7 @@ export default async function NewEventPage({
         Новое мероприятие
       </h1>
 
-      {error && (
-        <p className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
-          {error}
-        </p>
-      )}
+      {error && <p className={"mt-4 " + alertError}>{error}</p>}
 
       <EventForm action={createEvent} submitLabel="Создать" />
     </div>

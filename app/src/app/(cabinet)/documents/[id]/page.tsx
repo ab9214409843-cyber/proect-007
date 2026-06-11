@@ -9,7 +9,7 @@ import {
 } from "@/lib/documents";
 import { deleteDocument, downloadDocument } from "../actions";
 import ConfirmDeleteButton from "@/components/ConfirmDeleteButton";
-import { badgeBase, btnPrimary, btnSecondary } from "@/components/ui";
+import { alertError, badgeBase, btnPrimary, btnSecondary } from "@/components/ui";
 
 // Карточка документа. В Next.js 16 params — асинхронные.
 export default async function DocumentPage({
@@ -47,9 +47,7 @@ export default async function DocumentPage({
         </span>
       </div>
 
-      {error && (
-        <p className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>
-      )}
+      {error && <p className={"mt-4 " + alertError}>{error}</p>}
 
       {/* Основные поля */}
       <dl className="mt-8 grid gap-4 sm:grid-cols-2">

@@ -30,20 +30,11 @@ export function documentTypeLabel(code: string | null): string {
   return DOCUMENT_TYPES.find((t) => t.code === code)?.label ?? code;
 }
 
-const DOCUMENT_TYPE_BADGE: Record<string, string> = {
-  regulation: "bg-blue-100 text-blue-800",
-  rules: "bg-indigo-100 text-indigo-800",
-  memo: "bg-purple-100 text-purple-800",
-  estimate: "bg-green-100 text-green-800",
-  tor: "bg-amber-100 text-amber-800",
-  scenario: "bg-pink-100 text-pink-800",
-  report: "bg-teal-100 text-teal-800",
-  other: "bg-gray-100 text-gray-700",
-};
-
-export function documentTypeBadgeClass(code: string | null): string {
-  if (!code) return "bg-gray-100 text-gray-700";
-  return DOCUMENT_TYPE_BADGE[code] ?? "bg-gray-100 text-gray-700";
+// Тип документа — единая тёплая нейтраль (как категории в «Базе опыта»): сам тип
+// различается подписью, а цветом за внимание конкурируют только смысловые бейджи
+// (статусы, приоритеты, состояние срока). Палитра v2 — см. globals.css.
+export function documentTypeBadgeClass(_code: string | null): string {
+  return "bg-paper-2 text-muted";
 }
 
 // Размер файла в байтах → человекочитаемо: «340 КБ», «1.2 МБ». Пусто → «—».

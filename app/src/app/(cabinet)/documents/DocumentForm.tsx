@@ -48,7 +48,7 @@ export default function DocumentForm({
         </div>
       ) : (
         <label className="flex flex-col gap-1 text-sm text-espresso">
-          Файл <span className="text-red-500">*</span>
+          Файл <span className="text-danger">*</span>
           <input
             name="file"
             type="file"

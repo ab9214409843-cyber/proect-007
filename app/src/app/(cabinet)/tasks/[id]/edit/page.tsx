@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { updateTask } from "../../actions";
 import TaskForm from "../../TaskForm";
+import { alertError } from "@/components/ui";
 
 // Страница редактирования задачи. params и searchParams в Next.js 16 — асинхронные.
 export default async function EditTaskPage({
@@ -39,11 +40,7 @@ export default async function EditTaskPage({
         Редактирование
       </h1>
 
-      {error && (
-        <p className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
-          {error}
-        </p>
-      )}
+      {error && <p className={"mt-4 " + alertError}>{error}</p>}
 
       <TaskForm
         action={updateTask}

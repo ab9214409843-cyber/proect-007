@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { btnPrimary, btnSecondary } from "@/components/ui";
 
 // Экран на случай непредвиденной ошибки в любом разделе.
 // В Next.js 16.2 для повтора используется unstable_retry (раньше — reset).
@@ -26,16 +27,10 @@ export default function Error({
         Произошла непредвиденная ошибка. Попробуй ещё раз — обычно это помогает.
       </p>
       <div className="mt-2 flex items-center gap-3">
-        <button
-          onClick={() => unstable_retry()}
-          className="rounded-full bg-espresso px-5 py-2 text-sm font-medium text-paper transition hover:bg-espresso-7"
-        >
+        <button onClick={() => unstable_retry()} className={btnPrimary}>
           Попробовать снова
         </button>
-        <Link
-          href="/dashboard"
-          className="rounded-md border border-sand bg-card px-5 py-2 text-sm font-medium text-espresso transition hover:bg-paper-2"
-        >
+        <Link href="/dashboard" className={btnSecondary}>
           В кабинет
         </Link>
       </div>

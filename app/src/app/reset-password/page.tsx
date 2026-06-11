@@ -1,5 +1,5 @@
 import { updatePassword } from "./actions";
-import { btnPrimary, inputBase } from "@/components/ui";
+import { alertError, btnPrimary, inputBase } from "@/components/ui";
 
 // Установка нового пароля. Открывается по ссылке из письма (сессия восстановления
 // уже установлена). По образцу страницы регистрации.
@@ -20,11 +20,7 @@ export default async function ResetPasswordPage({
           Придумай новый пароль — минимум 8 символов.
         </p>
 
-        {error && (
-          <p className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
-            {error}
-          </p>
-        )}
+        {error && <p className={"mb-4 " + alertError}>{error}</p>}
 
         <form className="flex flex-col gap-4">
           <label className="flex flex-col gap-1 text-sm text-espresso">

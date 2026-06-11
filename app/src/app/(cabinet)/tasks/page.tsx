@@ -13,6 +13,7 @@ import TaskStatusSelect from "./TaskStatusSelect";
 import PageHeader from "@/components/PageHeader";
 import EmptyState from "@/components/EmptyState";
 import {
+  alertError,
   badgeBase,
   btnPrimary,
   btnSecondary,
@@ -82,9 +83,7 @@ export default async function TasksPage({
         }
       />
 
-      {error && (
-        <p className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>
-      )}
+      {error && <p className={"mt-4 " + alertError}>{error}</p>}
 
       {/* Фильтры */}
       <div className="mt-6 flex flex-wrap items-center gap-3">

@@ -21,7 +21,7 @@ export default function EventForm({
       {event && <input type="hidden" name="id" value={event.id} />}
 
       <label className="flex flex-col gap-1 text-sm text-espresso">
-        Название <span className="text-red-500">*</span>
+        Название <span className="text-danger">*</span>
         <input
           name="title"
           type="text"
@@ -34,7 +34,7 @@ export default function EventForm({
       </label>
 
       <label className="flex flex-col gap-1 text-sm text-espresso">
-        Тип мероприятия <span className="text-red-500">*</span>
+        Тип мероприятия <span className="text-danger">*</span>
         <select
           name="event_type"
           required
@@ -54,7 +54,7 @@ export default function EventForm({
 
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="flex flex-col gap-1 text-sm text-espresso">
-          Дата начала <span className="text-red-500">*</span>
+          Дата начала <span className="text-danger">*</span>
           <input
             name="start_date"
             type="date"

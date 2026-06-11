@@ -14,7 +14,7 @@ import {
 } from "@/lib/tasks";
 import { deleteTask, updateTaskStatus } from "../actions";
 import ConfirmDeleteButton from "@/components/ConfirmDeleteButton";
-import { badgeBase, btnSecondary, inputBase } from "@/components/ui";
+import { alertError, badgeBase, btnSecondary, inputBase } from "@/components/ui";
 
 // Карточка задачи. В Next.js 16 params — асинхронные.
 export default async function TaskPage({
@@ -55,9 +55,7 @@ export default async function TaskPage({
         </span>
       </div>
 
-      {error && (
-        <p className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>
-      )}
+      {error && <p className={"mt-4 " + alertError}>{error}</p>}
 
       {/* Основные поля */}
       <dl className="mt-8 grid gap-4 sm:grid-cols-2">

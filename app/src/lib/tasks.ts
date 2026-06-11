@@ -27,7 +27,7 @@ const TASK_STATUS_BADGE: Record<string, string> = {
 };
 
 export function taskStatusBadgeClass(code: string): string {
-  return TASK_STATUS_BADGE[code] ?? "bg-gray-100 text-gray-700";
+  return TASK_STATUS_BADGE[code] ?? "bg-paper-2 text-muted";
 }
 
 // Приоритеты задачи: код в БД → подпись в интерфейсе.
@@ -50,7 +50,7 @@ const TASK_PRIORITY_BADGE: Record<string, string> = {
 };
 
 export function taskPriorityBadgeClass(code: string): string {
-  return TASK_PRIORITY_BADGE[code] ?? "bg-gray-100 text-gray-600";
+  return TASK_PRIORITY_BADGE[code] ?? "bg-paper-2 text-muted";
 }
 
 // Сдвиг даты 'YYYY-MM-DD' на указанное число дней (UTC, чтобы срок не «съезжал» из-за часового

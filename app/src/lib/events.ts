@@ -44,7 +44,7 @@ const STATUS_BADGE: Record<string, string> = {
 };
 
 export function statusBadgeClass(code: string): string {
-  return STATUS_BADGE[code] ?? "bg-gray-100 text-gray-700";
+  return STATUS_BADGE[code] ?? "bg-paper-2 text-muted";
 }
 
 // Дата вида '2026-06-09' → «9 июня 2026». Пусто → «—».

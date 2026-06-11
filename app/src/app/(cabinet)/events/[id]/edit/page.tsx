@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { updateEvent } from "../../actions";
 import EventForm from "../../EventForm";
+import { alertError } from "@/components/ui";
 
 // Страница редактирования мероприятия. params и searchParams в Next.js 16 — асинхронные.
 export default async function EditEventPage({
@@ -37,11 +38,7 @@ export default async function EditEventPage({
         Редактирование
       </h1>
 
-      {error && (
-        <p className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
-          {error}
-        </p>
-      )}
+      {error && <p className={"mt-4 " + alertError}>{error}</p>}
 
       <EventForm action={updateEvent} event={event} submitLabel="Сохранить" />
     </div>

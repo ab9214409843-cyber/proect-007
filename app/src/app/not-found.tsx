@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { btnPrimary, btnSecondary } from "@/components/ui";
 
 // Экран «страница не найдена»: срабатывает на notFound() (например, карточка
 // несуществующего мероприятия) и на любой неизвестный URL.
@@ -13,16 +14,10 @@ export default function NotFound() {
         Возможно, запись удалена или ссылка устарела.
       </p>
       <div className="mt-2 flex items-center gap-3">
-        <Link
-          href="/dashboard"
-          className="rounded-full bg-espresso px-5 py-2 text-sm font-medium text-paper transition hover:bg-espresso-7"
-        >
+        <Link href="/dashboard" className={btnPrimary}>
           В кабинет
         </Link>
-        <Link
-          href="/"
-          className="rounded-md border border-sand bg-card px-5 py-2 text-sm font-medium text-espresso transition hover:bg-paper-2"
-        >
+        <Link href="/" className={btnSecondary}>
           На главную
         </Link>
       </div>

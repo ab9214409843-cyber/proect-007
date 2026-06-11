@@ -30,7 +30,7 @@ export default function TaskForm({
       {task && <input type="hidden" name="id" value={task.id} />}
 
       <label className="flex flex-col gap-1 text-sm text-espresso">
-        Название <span className="text-red-500">*</span>
+        Название <span className="text-danger">*</span>
         <input
           name="title"
           type="text"

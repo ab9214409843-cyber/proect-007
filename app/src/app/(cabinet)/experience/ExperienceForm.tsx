@@ -35,7 +35,7 @@ export default function ExperienceForm({
       {note && <input type="hidden" name="id" value={note.id} />}
 
       <label className="flex flex-col gap-1 text-sm text-espresso">
-        Заголовок <span className="text-red-500">*</span>
+        Заголовок <span className="text-danger">*</span>
         <input
           name="title"
           type="text"

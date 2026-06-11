@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { btnPrimary, btnSecondary } from "@/components/ui";
 
 // Ошибка внутри раздела кабинета — рендерится внутри layout (меню остаётся на месте).
 export default function CabinetError({
@@ -24,16 +25,10 @@ export default function CabinetError({
         Не удалось загрузить раздел. Попробуй ещё раз.
       </p>
       <div className="mt-5 flex items-center justify-center gap-3">
-        <button
-          onClick={() => unstable_retry()}
-          className="rounded-full bg-espresso px-5 py-2 text-sm font-medium text-paper transition hover:bg-espresso-7"
-        >
+        <button onClick={() => unstable_retry()} className={btnPrimary}>
           Попробовать снова
         </button>
-        <Link
-          href="/dashboard"
-          className="rounded-md border border-sand bg-card px-5 py-2 text-sm font-medium text-espresso transition hover:bg-paper-2"
-        >
+        <Link href="/dashboard" className={btnSecondary}>
           В кабинет
         </Link>
       </div>
