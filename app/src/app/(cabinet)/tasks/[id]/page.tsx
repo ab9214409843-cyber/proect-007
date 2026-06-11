@@ -4,6 +4,9 @@ import { createClient } from "@/lib/supabase/server";
 import { formatEventDate } from "@/lib/events";
 import {
   TASK_STATUSES,
+  dueState,
+  dueStateBadgeClass,
+  dueStateLabel,
   taskPriorityBadgeClass,
   taskPriorityLabel,
   taskStatusBadgeClass,
@@ -60,7 +63,17 @@ export default async function TaskPage({
       <dl className="mt-8 grid gap-4 sm:grid-cols-2">
         <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
           <dt className="text-xs uppercase tracking-wide text-muted">Срок</dt>
-          <dd className="mt-1 text-espresso">{formatEventDate(task.due_date)}</dd>
+          <dd className="mt-1 flex flex-wrap items-center gap-2 text-espresso">
+            {formatEventDate(task.due_date)}
+            {(() => {
+              const ds = dueState(task.due_date, task.status);
+              return ds === "none" ? null : (
+                <span className={badgeBase + " " + dueStateBadgeClass(ds)}>
+                  {dueStateLabel(ds)}
+                </span>
+              );
+            })()}
+          </dd>
         </div>
         <div className="rounded-lg border border-sand bg-card p-4 shadow-sm">
           <dt className="text-xs uppercase tracking-wide text-muted">

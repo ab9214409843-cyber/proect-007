@@ -3,6 +3,9 @@ import { createClient } from "@/lib/supabase/server";
 import { formatEventDate } from "@/lib/events";
 import {
   TASK_STATUSES,
+  dueState,
+  dueStateBadgeClass,
+  dueStateLabel,
   taskPriorityBadgeClass,
   taskPriorityLabel,
 } from "@/lib/tasks";
@@ -139,29 +142,44 @@ export default async function TasksPage({
         />
       ) : (
         <ul className="mt-8 flex flex-col gap-2">
-          {tasks.map((task) => (
-            <li key={task.id} className={rowCard}>
-              <Link href={`/tasks/${task.id}`} className="min-w-0 flex-1">
-                <p className="font-medium text-espresso hover:underline">
-                  {task.title}
-                </p>
-                <p className="mt-1 text-sm text-muted">
-                  Срок: {formatEventDate(task.due_date)}
-                  {task.events && <> · {task.events.title}</>}
-                </p>
-              </Link>
-              <div className="flex shrink-0 items-center gap-2">
-                <span className={badgeBase + " " + taskPriorityBadgeClass(task.priority)}>
-                  {taskPriorityLabel(task.priority)}
-                </span>
-                <TaskStatusSelect
-                  id={task.id}
-                  status={task.status}
-                  redirectTo={redirectTo}
-                />
-              </div>
-            </li>
-          ))}
+          {tasks.map((task) => {
+            const ds = dueState(task.due_date, task.status);
+            return (
+              <li
+                key={task.id}
+                className={
+                  rowCard + (ds === "overdue" ? " border-danger/40" : "")
+                }
+              >
+                <Link href={`/tasks/${task.id}`} className="min-w-0 flex-1">
+                  <p className="font-medium text-espresso hover:underline">
+                    {task.title}
+                  </p>
+                  <p className="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted">
+                    <span>
+                      Срок: {formatEventDate(task.due_date)}
+                      {task.events && <> · {task.events.title}</>}
+                    </span>
+                    {ds !== "none" && (
+                      <span className={badgeBase + " " + dueStateBadgeClass(ds)}>
+                        {dueStateLabel(ds)}
+                      </span>
+                    )}
+                  </p>
+                </Link>
+                <div className="flex shrink-0 items-center gap-2">
+                  <span className={badgeBase + " " + taskPriorityBadgeClass(task.priority)}>
+                    {taskPriorityLabel(task.priority)}
+                  </span>
+                  <TaskStatusSelect
+                    id={task.id}
+                    status={task.status}
+                    redirectTo={redirectTo}
+                  />
+                </div>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

@@ -20,14 +20,14 @@ export function kindLabel(code: string | null): string {
 }
 
 const EXPERIENCE_KIND_BADGE: Record<string, string> = {
-  positive: "bg-green-100 text-green-800",
-  negative: "bg-red-100 text-red-800",
-  improvement: "bg-amber-100 text-amber-800",
+  positive: "bg-success-bg text-success",
+  negative: "bg-danger-bg text-danger",
+  improvement: "bg-warn-bg text-warn",
 };
 
 export function kindBadgeClass(code: string | null): string {
-  if (!code) return "bg-gray-100 text-gray-700";
-  return EXPERIENCE_KIND_BADGE[code] ?? "bg-gray-100 text-gray-700";
+  if (!code) return "bg-paper-2 text-muted";
+  return EXPERIENCE_KIND_BADGE[code] ?? "bg-paper-2 text-muted";
 }
 
 // Категории (тема вывода): код в БД → подпись. Коды строго как в CHECK миграции 0001.
@@ -48,17 +48,8 @@ export function categoryLabel(code: string | null): string {
   return EXPERIENCE_CATEGORIES.find((c) => c.code === code)?.label ?? code;
 }
 
-const EXPERIENCE_CATEGORY_BADGE: Record<string, string> = {
-  organization: "bg-blue-100 text-blue-800",
-  venue: "bg-indigo-100 text-indigo-800",
-  contractors: "bg-purple-100 text-purple-800",
-  documents: "bg-teal-100 text-teal-800",
-  participants: "bg-pink-100 text-pink-800",
-  budget: "bg-emerald-100 text-emerald-800",
-  other: "bg-gray-100 text-gray-700",
-};
-
-export function categoryBadgeClass(code: string | null): string {
-  if (!code) return "bg-gray-100 text-gray-700";
-  return EXPERIENCE_CATEGORY_BADGE[code] ?? "bg-gray-100 text-gray-700";
+// Категории — единая тёплая нейтраль: смысловой цвет несёт «тип вывода» (kind ✅/⚠️/💡),
+// а категория лишь помечает тему, поэтому не конкурирует за внимание цветом.
+export function categoryBadgeClass(_code: string | null): string {
+  return "bg-paper-2 text-muted";
 }

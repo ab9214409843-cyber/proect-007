@@ -37,10 +37,10 @@ export function eventTypeLabel(code: string | null): string {
 
 // Tailwind-классы цветного бейджа статуса.
 const STATUS_BADGE: Record<string, string> = {
-  planned: "bg-gray-100 text-gray-700",
-  preparing: "bg-amber-100 text-amber-800",
-  in_progress: "bg-blue-100 text-blue-800",
-  done: "bg-green-100 text-green-800",
+  planned: "bg-paper-2 text-muted",
+  preparing: "bg-warn-bg text-warn",
+  in_progress: "bg-info-bg text-info",
+  done: "bg-success-bg text-success",
 };
 
 export function statusBadgeClass(code: string): string {
