@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 
 // Публичная главная — «тёплая редакционная роскошь» (дизайн v2).
 // Серверный компонент: без интерактива, только разметка.
@@ -91,34 +92,34 @@ export default function Home() {
         <div className="mt-9 flex flex-wrap justify-center gap-4">
           <Link
             href="/register"
-            className="rounded-full bg-espresso px-8 py-3 text-base font-medium text-paper transition hover:bg-espresso-7"
+            className="rounded-full bg-espresso px-8 py-3 text-base font-medium text-paper transition hover:bg-espresso-7 motion-safe:hover:-translate-y-0.5"
           >
             Начать
           </Link>
           <Link
             href="/login"
-            className="rounded-full border border-sand bg-card px-8 py-3 text-base font-medium text-espresso transition hover:bg-paper-2"
+            className="rounded-full border border-sand bg-card px-8 py-3 text-base font-medium text-espresso transition hover:bg-paper-2 motion-safe:hover:-translate-y-0.5"
           >
             Войти
           </Link>
         </div>
 
         {/* Большое фото */}
-        <div className="relative mt-14 aspect-[16/9] w-full overflow-hidden rounded-3xl border border-sand shadow-xl shadow-espresso/10">
+        <div className="group relative mt-14 aspect-[16/9] w-full overflow-hidden rounded-3xl border border-sand shadow-xl shadow-espresso/10">
           <Image
-            src="/images/hero-hall.jpg"
-            alt="Подготовленный банкетный зал для мероприятия"
+            src="/images/hero-event.jpg"
+            alt="Массовое спортивное мероприятие: участники забега и зрители"
             fill
             priority
             sizes="(max-width: 1152px) 100vw, 1152px"
-            className="object-cover"
+            className="object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.04]"
           />
         </div>
       </section>
 
       {/* Проблема организаторов */}
       <section className="mt-24 bg-paper-2">
-        <div className="mx-auto max-w-6xl px-6 py-20">
+        <Reveal className="mx-auto max-w-6xl px-6 py-20">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
             Знакомо?
           </p>
@@ -133,22 +134,26 @@ export default function Home() {
           <p className="mt-4 max-w-3xl text-lg font-medium text-espresso">
             EventOS собирает подготовку в единую и предсказуемую систему.
           </p>
-        </div>
+        </Reveal>
       </section>
 
       {/* Как это работает */}
       <section className="mx-auto max-w-6xl px-6 py-20">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
-          Как это работает
-        </p>
-        <h2 className="mt-4 font-serif text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
-          Четыре спокойных шага
-        </h2>
+        <Reveal>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
+            Как это работает
+          </p>
+          <h2 className="mt-4 font-serif text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
+            Четыре спокойных шага
+          </h2>
+        </Reveal>
         <ol className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((step) => (
-            <li
+          {steps.map((step, i) => (
+            <Reveal
+              as="li"
               key={step.n}
-              className="rounded-2xl border border-sand bg-card p-6 shadow-sm shadow-espresso/5"
+              delay={i * 90}
+              className="rounded-2xl border border-sand bg-card p-6 shadow-sm shadow-espresso/5 transition motion-safe:hover:-translate-y-0.5 hover:shadow-md hover:shadow-espresso/10"
             >
               <span className="font-serif text-3xl font-semibold text-clay">
                 {step.n}
@@ -157,48 +162,51 @@ export default function Home() {
                 {step.title}
               </h3>
               <p className="mt-2 text-sm text-muted">{step.text}</p>
-            </li>
+            </Reveal>
           ))}
         </ol>
       </section>
 
       {/* Редакционное фото-вставка */}
       <section className="mx-auto max-w-6xl px-6 pb-4">
-        <div className="relative aspect-[21/9] w-full overflow-hidden rounded-3xl border border-sand shadow-lg shadow-espresso/10">
+        <Reveal className="group relative block aspect-[21/9] w-full overflow-hidden rounded-3xl border border-sand shadow-lg shadow-espresso/10">
           <Image
-            src="/images/banquet.jpg"
-            alt="Сервированный стол с цветами на мероприятии"
+            src="/images/event-action.jpg"
+            alt="Участники в активной зоне мероприятия — азарт и эмоции"
             fill
             sizes="(max-width: 1152px) 100vw, 1152px"
-            className="object-cover"
+            className="object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.04]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-espresso/50 to-transparent" />
           <p className="absolute bottom-6 left-6 right-6 max-w-xl font-serif text-2xl font-semibold leading-snug text-paper sm:text-3xl">
             Каждая деталь продумана заранее — и день мероприятия проходит спокойно.
           </p>
-        </div>
+        </Reveal>
       </section>
 
       {/* Возможности */}
       <section className="mt-20 bg-paper-2">
         <div className="mx-auto max-w-6xl px-6 py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
-            Возможности
-          </p>
-          <h2 className="mt-4 font-serif text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
-            Всё, что нужно организатору
-          </h2>
+          <Reveal>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
+              Возможности
+            </p>
+            <h2 className="mt-4 font-serif text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
+              Всё, что нужно организатору
+            </h2>
+          </Reveal>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((f) => (
-              <div
+            {features.map((f, i) => (
+              <Reveal
                 key={f.title}
-                className="rounded-2xl border border-sand bg-card p-6 shadow-sm shadow-espresso/5"
+                delay={i * 80}
+                className="rounded-2xl border border-sand bg-card p-6 shadow-sm shadow-espresso/5 transition motion-safe:hover:-translate-y-0.5 hover:shadow-md hover:shadow-espresso/10"
               >
                 <h3 className="font-serif text-lg font-semibold text-espresso">
                   {f.title}
                 </h3>
                 <p className="mt-2 text-sm text-muted">{f.text}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -206,23 +214,25 @@ export default function Home() {
 
       {/* Для кого */}
       <section className="mx-auto max-w-6xl px-6 py-20">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
-          Для кого
-        </p>
-        <h2 className="mt-4 font-serif text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
-          Для тех, кто отвечает за мероприятие
-        </h2>
-        <p className="mt-5 max-w-3xl text-lg text-muted">
-          Для специалистов, которые отвечают за организацию мероприятий:
-          спортивных, познавательных и других. Первая версия создаётся под
-          организаторов спортивных мероприятий и опирается на реальный процесс
-          подготовки.
-        </p>
+        <Reveal>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-clay">
+            Для кого
+          </p>
+          <h2 className="mt-4 font-serif text-3xl font-semibold tracking-tight text-espresso sm:text-4xl">
+            Для тех, кто отвечает за мероприятие
+          </h2>
+          <p className="mt-5 max-w-3xl text-lg text-muted">
+            Для специалистов, которые отвечают за организацию мероприятий:
+            спортивных, познавательных и других. Первая версия создаётся под
+            организаторов спортивных мероприятий и опирается на реальный процесс
+            подготовки.
+          </p>
+        </Reveal>
       </section>
 
       {/* Финальный призыв */}
       <section className="bg-espresso">
-        <div className="mx-auto max-w-6xl px-6 py-20 text-center">
+        <Reveal className="mx-auto max-w-6xl px-6 py-20 text-center">
           <h2 className="mx-auto max-w-2xl font-serif text-3xl font-semibold tracking-tight text-paper sm:text-4xl">
             Готовы навести порядок в подготовке?
           </h2>
@@ -231,11 +241,11 @@ export default function Home() {
           </p>
           <Link
             href="/register"
-            className="mt-9 inline-block rounded-full bg-paper px-8 py-3 text-base font-medium text-espresso transition hover:bg-paper-2"
+            className="mt-9 inline-block rounded-full bg-paper px-8 py-3 text-base font-medium text-espresso transition hover:bg-paper-2 motion-safe:hover:-translate-y-0.5"
           >
             Начать бесплатно
           </Link>
-        </div>
+        </Reveal>
       </section>
 
       {/* Подвал */}
